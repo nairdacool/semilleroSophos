@@ -5,7 +5,7 @@ import java.io.IOException;
 import org.junit.Test;
 import atu.testrecorder.exceptions.ATUTestRecorderException;
 
-public class TestMetodosEncapsulamiento {
+public class POMCineCalidad {
 	
 	@Test
 	public void test() throws InterruptedException, IOException, ATUTestRecorderException {
