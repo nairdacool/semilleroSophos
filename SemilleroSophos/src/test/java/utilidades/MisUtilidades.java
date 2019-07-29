@@ -43,7 +43,7 @@ public class MisUtilidades {
 	public static void abrirNavegador() {
 		System.setProperty(variableEntorno, rutaControlador);
 		Mozilla = new FirefoxDriver();
-		assertNotNull("La instanciación del controlador no puede ser nula", Mozilla);
+		//assertNotNull("La instanciación del controlador no puede ser nula", Mozilla);
 		Mozilla.get(url);
 		Mozilla.manage().window().maximize();
 		esperar(tiempo);
@@ -103,7 +103,6 @@ public class MisUtilidades {
 	public static void iniciarGrabacion() throws ATUTestRecorderException {
 		formatoFecha = formatoFecha();
 	    fecha = tomarFecha();
-	    assertNotNull("La variable 'date', no puede ser nula", fecha);
 	    video = new ATUTestRecorder(rutaVideo,"TestVideo-" + formatoFecha.format(fecha),false);
 	    video.start();	
 	}
@@ -125,6 +124,22 @@ public class MisUtilidades {
 		Mozilla.quit();
 	}
 	
+	/**
+	 * Assert para verificar que el controlador no sea nulo
+	 */
+	public static void verificarNoNullControlador() {
+		assertNotNull("La instanciación no puede ser nula", Mozilla);
+	}
+	/**
+	 * Assert para verificar que el la fecha no sea nula
+	 */
+	public static void verificarNotNullFecha() {
+	    assertNotNull("La variable 'date', no puede ser nula", fecha);
+	}
+	/**
+	 * Metodo para las esperas implicitas (implicitlyWait)
+	 * @param segundos
+	 */
 	private static void esperar(int segundos) {
 		Mozilla.manage().timeouts().implicitlyWait(segundos, TimeUnit.SECONDS);
 	}
@@ -138,4 +153,5 @@ public class MisUtilidades {
 		DateFormat formato = new SimpleDateFormat("dd-MM-yy HH-mm-ss");
 		return formato;
 	}
+	
 }
