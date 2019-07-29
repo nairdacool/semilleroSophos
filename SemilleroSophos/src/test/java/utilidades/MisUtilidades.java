@@ -77,7 +77,7 @@ public class MisUtilidades {
 	public static void buscarPelicula(String peliculaParaBuscar) throws InterruptedException {
 		Mozilla.findElement(campoBusquedaDeLaPagina).sendKeys(peliculaParaBuscar);
         Mozilla.findElement(campoBusquedaDeLaPagina).sendKeys(Keys.ENTER);
-        esperar(tiempo);
+        esperar(tiempo);Thread.sleep(1);
         Mozilla.findElement(seleccionPrimerResultado).click();
 	}
 	
@@ -108,7 +108,7 @@ public class MisUtilidades {
 	    video.start();	
 	}
 	
-	/**
+	/**	
 	 * Metodo para detener la grabacion del test.
 	 * 
 	 * @param recorder
