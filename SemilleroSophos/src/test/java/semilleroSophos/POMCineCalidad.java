@@ -1,6 +1,7 @@
 package semilleroSophos;
 
-import static utilidades.MisUtilidades.*;
+import static utilidadesPOM.MisUtilidades.*;
+
 import java.io.IOException;
 import org.junit.Test;
 import atu.testrecorder.exceptions.ATUTestRecorderException;

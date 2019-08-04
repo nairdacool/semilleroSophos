@@ -1,0 +1,1442 @@
+<html><head>
+<link rel="shortcut icon" href="/shell/xflow/kukini-commerce/docroot/core/images/favicon.ico">
+<title>Tienda Telmex - Computadoras, Laptops, Consolas Videojuegos, Mensualidades Recibo Telmex.</title>
+<meta http-equiv="Description" content="Compra en mensualidades con cargo a tu recibo, computadoras, laptops, netbooks, consolas videojuegos, Meses sin intereses, teléfonos, iPod, XBOX, Wii, HP, ACER, COMPAQ, Mac.">
+<meta http-equiv="Keywords" content="tienda, Telmex, computadora, laptop, consola, videojuego, video, juego, mensualidades, recibo, meses sin intereses, Xbox, ipod, touch, teléfonos, telefonía, fax, scanner, hp, compaq, acer, wii">
+<meta name="google-site-verification" content="LHmzL3yCEq1RWRqZPI-yfPuAymFx4ncAAjQdWkRNNi8">
+
+	
+
+<link rel="stylesheet" href="/shell/xflow/kukini-commerce/docroot/core/css/popup.css" type="text/css">
+<link rel="stylesheet" href="/shell/xflow/kukini-commerce/docroot/core/css/bonos.css" type="text/css">
+<link rel="stylesheet" href="/shell/xflow/kukini-commerce/docroot/core/css/modalbox.css" type="text/css">
+<link rel="stylesheet" href="/shell/xflow/kukini-commerce/docroot/core/css/estilos-tda.css" type="text/css">
+
+<!--[if lt IE 9]>
+<link rel="stylesheet" type="text/css" href="/shell/xflow/kukini-commerce/docroot/core/css/estilos-IE8.css" />
+<![endif]-->
+<!--[if lte IE 8]>
+<link rel="stylesheet" type="text/css" href="/shell/xflow/kukini-commerce/docroot/core/css/estilos-IE8.css" />
+<![endif]-->
+
+<script type="text/javascript" async="" src="//www.googleadservices.com/pagead/conversion_async.js"></script><script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script async="" src="//www.googletagmanager.com/gtm.js?id=GTM-NRSZ4G"></script><script src="https://connect.facebook.net/signals/plugins/inferredEvents.js?v=2.9.2" async=""></script><script src="https://connect.facebook.net/signals/config/2211292122482525?v=2.9.2&amp;r=stable" async=""></script><script async="" src="https://connect.facebook.net/en_US/fbevents.js"></script><script type="text/javascript" src="/shell/xflow/kukini-commerce/docroot/commerce/js/common.js"> </script>
+<script src="/shell/xflow/kukini-commerce/docroot/js/jquery-1.11.1.min.js"> </script>
+<script src="/shell/xflow/kukini-commerce/docroot/js/jquery-ui-1.10.4.custom.min.js"> </script>
+<link rel="stylesheet" href="/shell/xflow/kukini-commerce/docroot/core/css/jquery-ui-1.10.4.custom.css">
+<script src="/shell/xflow/kukini-commerce/docroot/js/jquery_placeholder.js"> </script>
+<script src="/shell/xflow/kukini-commerce/docroot/js/html5Inputs.js"> </script>
+<script src="/shell/xflow/kukini-commerce/docroot/js/jquery.blockUI.js"> </script>
+<script type="text/javascript">
+var lstNumClickAddCart = 0;
+var $j = jQuery.noConflict();
+var lnuNumProdShoppingCart = 0;
+<!--//
+/**
+ * 
+ * @classDescription ajax define una clase para realizar petiocines AJAX, con el objeto 
+ * XMLHttpRequest, funciona para la mayoria de los navegadores, los metodos init y request
+ * sirven para inicializar y para realizar una peticion asincrona respectivamente
+ * 
+ * @method init realiza la inicializacion de el objeto ajaxObj, que contiene la referencia
+ * a una instancia de XMLHttpRequest
+ * 
+ * @method request realiza una conexion asincrona , recibe como parametros la url a la que
+ * va a realizar la conexión y y el objeto que va a ejecutar, este objeto debe implementar los
+ * metodos doOnLoading() y doOnSucess(XMLHttpRequest)
+ * 
+ * 
+ */
+ 
+
+
+function ajax(){
+	
+	var ajaxObj=null;
+	
+	this.init= function(){		
+		if (window.XMLHttpRequest) {// Si es Mozilla, Safari etc
+			ajaxObj = new XMLHttpRequest()
+		}else if (window.ActiveXObject){ // pero si es IE	
+			try {
+				ajaxObj = new ActiveXObject("Msxml2.XMLHTTP")
+			}catch (e){ // en caso que sea una versión antigua
+				try{					
+					ajaxObj = new ActiveXObject("Microsoft.XMLHTTP")
+		    	}catch (e){}
+			}
+		}else ajaxObj=null;
+	}
+	
+	this.request=function(url,object){
+		
+		if(ajaxObj == null)return null;
+		
+		ajaxObj.onreadystatechange=function(){
+		if (ajaxObj.readyState==1)object.doOnLoading()
+        if (ajaxObj.readyState == 4 && 
+		    (ajaxObj.status==200 || window.location.href.indexOf("http")==-1))
+			object.doOnSuccess(ajaxObj);
+		}
+		ajaxObj.open('GET', url, true)	
+		ajaxObj.send(null)
+	}
+}
+
+//function $(id){    
+    //return document.getElementById(id);
+//}
+
+function elementsById(id){
+    var nodes = [];
+    var tmpNode = document.getElementById(id);
+    while(tmpNode){
+        nodes.push(tmpNode);
+        tmpNode.id = "\\";
+        tmpNode = document.getElementById(id);
+    }
+    for(var x=0; x<nodes.length; x++){
+        nodes[x].id = id;
+    }
+    return nodes;
+}
+
+
+
+
+
+
+
+function panelRefresher(){
+	
+		this.doOnLoading=function(){
+			document.getElementById("cartcontent").innerHTML="<div id='cartcontent'>Cargando</div>";					
+		}
+	
+		this.doOnSuccess=function(pAjaxObj){
+		var lstContent = pAjaxObj.responseText;
+		var lnuPositionInitialStr = lstContent.indexOf("<car id=\"numProdCarro\" value=\"");
+		var lnuPositionFinalStr = -1;
+		var lstNumProdCar = 0;
+		if( lnuPositionInitialStr != -1 ){
+			lnuPositionFinalStr = lstContent.indexOf("\"",lnuPositionInitialStr + 30)
+			lstNumProdCar = lstContent.substring(lnuPositionInitialStr + 30, lnuPositionFinalStr);
+			document.getElementById("divNumProdCar").innerHTML = lstNumProdCar;
+			//alert("ADD....");
+			//document.getElementById("dialogo").innerHTML=lstContent;
+			//getAddProdCart("");
+		}else{
+			document.getElementById("divNumProdCar").innerHTML = "0";
+		}
+		
+			document.getElementById("cartcontent").innerHTML=lstContent;
+			if( lstNumClickAddCart == 1 )
+			{
+				window.location="/shell/af/commerce/shopping/displayShoppingCart.do";
+			}
+			//alert("Producto agregado.....");
+			//document.getElementById(divProdCarrito).style.visibility= "visible";
+			//document.getElementById("cartcontent").style.visibility= "visible";			
+		}
+	}
+
+
+function getCart(){
+	myAjax=new ajax();
+    p=new panelRefresher()
+	myAjax.init();
+	myAjax.request("/shell/af/page/commerce/shopping/ajaxCart.do",p);
+}
+function getAddProdCart(pstContenido)
+{
+alert("crea modal.....");
+	
+  $j(document).ready(function(){
+	$j("#dialogo").dialog({
+			title: "Carrito de compras",
+			width: 315,  
+			height: 260,
+			show: "scale", 
+			hide: "scale", 
+			resizable: "false", 
+			position: "center",
+			modal: "true",
+			close: function() { 
+            $j(document).unbind('click'); }
+	});
+  });
+}
+function fnDialogPoliticas()
+{
+  $j(document).ready(function(){
+	$j("#dialogPoliticas").dialog({
+			title: "Políticas de Tienda en Línea",
+			width: 680,  
+			height: 360,
+			show: "scale", 
+			hide: "scale", 
+			resizable: "false", 
+			position: "center",
+			modal: "true",
+			close: function() { 
+            $j(document).unbind('click'); }
+	});
+  });
+}
+$j('body').bind('click', function(e) {
+        if( $j('#dialogo').dialog('isOpen') ) {
+            $j('#dialogo').dialog('close');
+        }
+    });
+
+-->
+
+</script>
+
+<script type="text/javascript">
+
+//alert(window.location.hostname+' - '+window.location.protocol+' - '+window.location.pathname+' - '+window.location.href);
+var lstUrl = window.location.href;
+var lnuPosPageValida1 = lstUrl.search("displayShoppingCart");
+var lnuPosPageValida2 = lstUrl.search("ValidaLadaSoft");
+var lnuPosPageValida3 = lstUrl.search("CapturaDatosEnvio");
+if(lnuPosPageValida1 > 0 || lnuPosPageValida2 > 0 || lnuPosPageValida3 > 0){
+    window.smartlook||(function(d) {
+    var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
+    var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
+    c.charset='utf-8';c.src='//rec.smartlook.com/recorder.js';h.appendChild(c);
+    })(document);
+    smartlook('init', '3997baf7431f7df55308f5fd5afaeee68f0d7b2b');
+}
+
+</script><script async="" type="text/javascript" charset="utf-8" src="//rec.smartlook.com/recorder.js"></script>
+
+<script src="https://www.googleadservices.com/pagead/conversion/978031949/?random=1564940434759&amp;cv=9&amp;fst=1564940434759&amp;num=1&amp;value=0&amp;label=s-a5CMWxkYYBEM2qrtID&amp;guid=ON&amp;resp=GooglemKTybQhCsO&amp;u_h=768&amp;u_w=1366&amp;u_ah=728&amp;u_aw=1366&amp;u_cd=24&amp;u_his=5&amp;u_tz=-300&amp;u_java=false&amp;u_nplug=3&amp;u_nmime=4&amp;gtm=2wg7o0&amp;sendb=1&amp;ig=1&amp;frm=0&amp;url=https%3A%2F%2Ftienda.telmex.com%2Fshell%2Faf%2Fcommerce%2Fshopping%2FdisplayShoppingCart.do&amp;ref=https%3A%2F%2Ftienda.telmex.com%2Fshell%2Faf%2Fcore%2Fcontent%2Fcontent.do%3FselectedChannels%3D%26contentTypeId%3D0%26contentId%3D21700&amp;tiba=Tienda%20Telmex%20-%20Computadoras%2C%20Laptops%2C%20Consolas%20Videojuegos%2C%20Mensualidades%20Recibo%20Telmex.&amp;bttype=purchase&amp;async=1&amp;rfmt=3&amp;fmt=4"></script></head>
+<body onkeypress="javascript:fnCountKeyPress();"><div style="display: none;">
+
+<iframe src="" name="refreshIframe" id="refreshIframe" width="1" height="1"></iframe>
+<iframe src="" name="sessionOff" id="sessionOff" width="1" height="1"></iframe>
+
+</div>
+<script language="JavaScript">
+var lnuCountPressKey = 0;
+
+function fnCountKeyPress()
+{
+	lnuCountPressKey = lnuCountPressKey + 1;
+}
+</script>
+
+<div align="center">
+<div id="superheader">
+  
+
+
+
+
+<div id="tab_header_home_pendiente">
+	
+	
+	<div class="div-gris">
+		<ul class="lstgris">
+			 <li><a href="#"><strong>800 123 1114</strong></a></li>
+			 <li><a href="#">Asistencia</a>
+			     <ul>
+			        <li style="text-align: left;"><a href="http://www.telmex.com/web/asistencia/hogar-preguntas-frecuentes-tienda-en-linea" target="_blank">Preguntas Frecuentes</a></li>
+			        <li style="text-align: left;"><a href="javascript:fnOpenChat();">Chat en línea</a></li>
+			     </ul>
+			 </li>
+			 <li><a title="Directorio de Centros" href="http://telmex.com/web/buscador?q=&amp;output=xml_no_dtd&amp;oe=UTF-8&amp;ie=UTF-8&amp;client=_nuevo_telmex_lugares&amp;proxystylesheet=_nuevo_telmex_lugares&amp;entqr=3&amp;entqrm=0&amp;ud=1&amp;getfields=*&amp;site=tiendas_fisicas|sitios_wifi|cibercafes&amp;filter=0&amp;requiredfields=&amp;giro=Mostrar+todo&amp;estado=Mostrar+todo" target="Centros_Telmex">Localiza tu Centro de Atención Telmex</a></li>
+			 <li>
+			 
+			 </li><li><a href="/shell/af/FacturaElectronica.do">Factura Electrónica</a></li>
+			 <li>
+			 
+			 </li><li><a title="Ofertas Telmex" href="http://www.claroshop.com" target="_blank"><strong><font class="aldea_digital">Claro shop</font></strong></a></li>
+			 
+			 <li>
+			 </li><li><a href="http://telmex.com"><strong><font class="telmexcom">telmex.com</font></strong></a></li>
+			 <li>
+			 
+		 </li></ul>
+	</div>
+</div>
+
+
+</div>
+
+
+		<div class="centrado">
+  			
+
+
+
+
+
+
+
+<script>
+        /*
+        function obtenerPuerto(){
+        	var tipoUsuario = document.querySelector('input[name=tipoLogin]:checked').value;
+        	console.log('Valor del tipo de usuario: ' + tipoUsuario);
+        	if(tipoUsuario === 'Negocio'){
+        		return;
+        	}
+        	$j.ajax({
+        		url: 'https://tiendaip.telmex.com/PageInfo/userInfo.jsp',
+        		timeout: 5000,
+				dataType: "jsonp",
+        		success: function (respuesta) {
+					if(respuesta.Puerto==="null" || respuesta.Puerto===null || respuesta.Puerto==="" || typeof respuesta.Puerto === "undefined"){
+						var usuario = document.getElementById("userH").value;
+        				var mensaje = usuario + '|' + respuesta + '|RESPUESTA';
+					    $j.get( "/shell/af/registroMsgJS.do", { mensajeJS:mensaje } );
+					} else {
+						var txtPuerto = $j( "#puertoUsuario" );
+						txtPuerto.val(respuesta.Puerto);
+					}
+        		},
+        		error: function(req, status, err){
+						var usuario = document.getElementById("userH").value;
+        				var mensaje = usuario + '|' + err + '|ERROR';
+					    $j.get( "/shell/af/registroMsgJS.do", { mensajeJS:mensaje } );
+        		}
+		    });
+        }
+        */
+</script>
+
+
+
+<div class="logo">
+     <a href="/shell/af/home.do"><img src="/shell/xflow/kukini-commerce/docroot/core/images/logo_tienda_telmex.png" border="0"></a>
+</div>
+<div class="bansuper">
+	<div id="searchform">
+			
+<!-- BEGIN core/search/simpleQuery.xform -->
+<script language="JavaScript">
+
+function fEnviaBusqueda()
+{
+	with( document.simpleQueryForm )
+	{
+		if(query.value != "")
+		{
+			document.simpleQueryForm.submit();
+		}
+	}
+}
+
+</script>
+
+<!-- END core/search/simpleQuery.xform -->
+<form action="/shell/af/core/search/search.do" method="get" name="simpleQueryForm" id="buscador1">
+    <input name="catalogs" type="hidden" value="COMMERCEPRODUCT">
+    
+    <input name="query" type="text" value="Ingresa tu busqueda..." class="buscador" id="textInputSearch" placeholder="Ingresa tu busqueda..." onblur="if (this.value == '') {this.value = 'Ingresa tu busqueda...';}" onfocus="if (this.value == 'Ingresa tu busqueda...') {this.value = '';}"> 
+    <input type="button" value="" id="botonbuscar1" class="btn_buscador" onclick="fEnviaBusqueda()">
+  </form>
+
+	</div>
+</div>
+<div class="conte-car">
+  <ul class="lst-carrito">
+      <li>
+	  	<a href="#">
+	  	   <div class="carrito"> 
+   		 	   <span class="amarillo" style="margin-left:18px; margin-top:3px;">
+   		 	   		<div id="divNumProdCar">1</div>
+   		   	   </span>
+		   </div>
+		</a>
+        <ul>
+          <li style="background-color:#f4f4f4;">
+		    <div class="div-cta">
+		    	<div class="div-producto">
+			    	<div id="cart">
+	  		  			
+  <div id="cartcontent">
+
+
+
+
+
+
+
+<script>
+var dummyUrl = "/shell/dummy.do";
+
+//
+//
+//
+function encodeURL(url, parameters) {
+  url = dummyUrl.replace("dummy.do", url);
+ 
+  if (parameters != null) {
+    if (parameters.charAt(0) == '&') {
+      parameters = parameters.substring(1);
+    }
+
+    if (url.indexOf("?") < 0) {
+      url += "?";
+    }
+    else {
+      url += "&";
+    }
+ 
+    url += parameters;
+  }
+ 
+  return url;
+}
+</script>
+
+
+
+
+	  
+									         
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+ 
+  <tbody><tr>
+      
+    <td> 
+        
+
+
+
+
+
+
+    
+<table width="95%" border="0" cellpadding="0" cellspacing="0">
+        
+
+	<tbody><tr>
+	    	<td width="7%" height="25" align="left" valign="top"> <span class="txt_producto">1</span></td>
+	        <td width="70%" align="left" valign="top"> <span class="txt_producto">Lavadora automática con Tapa Cristal 16 kg Easy Blanco</span></td>
+			
+					<td width="23%" align="right" valign="top"><span class="txt_preciocta">$ 7,789</span></td>
+				
+	</tr>
+  
+  
+
+<tr>
+	<td>
+		<form action="/shell/af/page/commerce/shopping/ajaxCart.do?flow.ctxID=1564940435260{0,3}&amp;flow.seqID=1564940435285" method="post" name="formNumberProdCar" id="formNumberProdCar">
+			<input name="hdNumProdCar" type="hidden" value="1">
+		</form>
+	</td>
+</tr>
+</tbody></table>
+
+    
+  
+
+
+
+
+
+    </td>
+  </tr>
+  
+
+<tr>
+	<td colspan="2" align="right">
+		<form action="/shell/af/page/commerce/shopping/ajaxCart.do?flow.ctxID=1564940435260{0,3}&amp;flow.seqID=1564940435285" method="get" name="AddToCartForm" id="AddToCartForm"> 
+        
+				<div class="div-btn-cta">
+        			<input type="button" value="¡Comprar!" class="frm_bot_azclaro" onclick="window.location='/shell/af/commerce/shopping/displayShoppingCart.do';">
+  				</div>
+  				<car id="numProdCarro" value="1">
+                
+			
+		
+	</car></form></td>
+</tr>
+</tbody></table>  
+      
+
+
+<script type="text/javascript">
+  function updateCartitem(formName, quantityValue) {
+    var form = document.forms[formName];
+    form.quantity.value = quantityValue;
+    form.quantityDisplay.value = quantityValue;
+    form.submit();
+  }
+
+  function gotoAuditTrail(theForm) {
+   var auditUrl = encodeURL('/af/page/commerce/merchandising/auditTrail.do?auditType=price');
+   var win=window.open(auditUrl , 'AuditTrail', 'width=500,height=650,resizable=yes,scrollbars=yes,status=0');
+  
+   if (win.opener == null) {
+     win.opener = self;
+   }
+   win.moveTo(0,0);
+   return false;
+  }
+</script>
+
+
+</div>
+  <script type="text/javascript">
+  	getCart();
+  </script>
+
+		    		</div>
+              
+			    </div>
+            </div>
+          </li>
+        </ul>
+      </li>  
+  </ul> 
+</div>
+<form action="/shell/af/page/header.do?flow.ctxID=1564940434906{0,3}&amp;flow.seqID=1564940434916" method="post" name="formNumberProdCar" id="formNumberProdCar">
+	<input name="hdNumProdCar" type="hidden" value="0">
+</form>
+<div class="div-usuario" id="div-usuario">
+
+		
+				<ul class="lst-usuario" id="lst-usuario">
+					<li>
+						<a href="/shell/af/commerce/shopping/ValidaLadaSoft.do?SMF=1">
+							<span style="padding-right:5px;">
+								<img src="/shell/xflow/kukini-commerce/docroot/core/images/ic_usuario.gif" width="15" height="20" border="none">
+							</span>
+							Bienvenido, ingresa aquí.
+						</a>
+					</li>  
+				</ul>
+			
+				
+	
+</div>
+<div id="opcionesNegocio" class="div_modal" style="display:none;">
+	<span class="tit-caract">Selecciona un negocio y un número de teléfono</span>
+	<br><br>
+	<span class="txt_descprod">
+		<br>
+		El correo electrónico proporcionado está registrado en Mi Telmex con los siguientes
+		negocios y números asociados, selecciona el negocio y el número de teléfono para el
+		cual deseas registrar la compra.
+	</span>
+	<br><br>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		<tbody><tr>
+			<td width="40%" height="45" align="right"><span class="txt_descprod"><strong>Negocio :&nbsp;</strong></span> </td>
+			<td width="60%">
+				<select name="listNegocios" id="listNegocios">
+			</select></td>
+		</tr>
+		<tr>
+			<td height="45" align="right"><strong><span class="txt_descprod">Número de teléfonos :&nbsp;</span></strong></td>
+			<td>
+				<select name="listTelefonos" id="listTelefonos">
+			</select></td>
+		</tr>
+	</tbody></table>
+</div>
+
+<div id="telefonosAdicionales" class="div_modal" style="display:none;">
+<form action="/shell/af/page/header.do?flow.ctxID=1564940434906{0,3}&amp;flow.seqID=1564940434916" method="post" name="formaTelAdicional" id="formaTelAdicional">
+	<span class="tit-caract">Selecciona el número de teléfono para el que quieres realizar la compra.</span>
+	<br><br>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0" id="telefonosAdicionalesTab">
+		<tbody>
+		</tbody>
+	</table>
+</form>
+</div>
+<div title="Dialogo Modal" id="dialogo" class="ventanaCarrito">
+	<p>Esto es un dialogo modal, por lo que la web queda bloqueada mientras esta abierta</p>
+</div>
+
+
+
+<script language="JavaScript">
+var lstUserReg = "NO";
+var lboEsUsuarioRegistrado = 'false';
+var lstUser = 'anonymous';
+if( lboEsUsuarioRegistrado == "true" )
+{
+	lstUserReg = "SI";
+}
+var lstFinSession = "NO";
+var id_timeSession = "";
+var lnuTimeSessionOff = 420 * 1000;
+var lnuTimeLayerShowQuestion = 150 * 1000;
+
+
+function manejarSesion()
+{
+   lstFinSession = "SI";
+   var iframe = document.getElementById("sessionOff");
+   iframe.src = "/shell/af/FinalizaSesionTiendaTelmex.do?user=" + lstUser + "&registrado=" + lstUserReg;
+}
+
+var id_timeSesion = null;
+var id_time15 = null;
+var intCont = 30;
+function init() {
+	 clearInterval(id_timeSessionOff);
+	 id_timeSesion = setInterval('fMuestraModalBox()', lnuTimeLayerShowQuestion);
+}
+
+function fMuestraModalBox() {
+			scrollTo(0,0);
+			if( lnuCountPressKey <= 0 )
+	 		{
+	            var lstHtml = '';
+	            lstHtml = lstHtml + '<center><div style="" id="MB_frame"><div id="MB_header"><div id="MB_caption">Tu sesión está por expirar.</div><div id="MB_close" opacity="0"></div></div><div id="MB_content">';
+	            lstHtml = lstHtml + '<div align="center" class="tit_negro">';
+	            lstHtml = lstHtml + '¿Desear continuar en la página?<br /><br />';
+	            lstHtml = lstHtml + '<input size="1" type="text" id="tfContador" name="tfContador" style="cursor: none;border: none;PADDING-RIGHT: 0.5em; PADDING-LEFT: 0.5em; FONT-WEIGHT: bold; FONT-SIZE: small; PADDING-BOTTOM: 0.5em; VERTICAL-ALIGN: top; COLOR: #00319c; PADDING-TOP: 0.5em; BACKGROUND-COLOR: #EFEFEF;" /><br /><br />';
+	            lstHtml = lstHtml + '<input type="Button" value="Si" class="frm_bot_azclaro" onclick="javascript:continuaSesion();"/>';
+	            lstHtml = lstHtml + '&nbsp;&nbsp;&nbsp;';
+	            lstHtml = lstHtml + '<input type="Button" value="No" class="frm_bot_azclaro" onclick="javascript:cierraSesion();" />';
+	            lstHtml = lstHtml + '</div></div></div></center>';
+	            lstHtml = lstHtml + '<div opacity="0" id="MB_overlay"></div>';
+	
+	            document.getElementById('msjSesion').innerHTML = lstHtml;
+	            id_time15 = setInterval('cambio()', 1000);
+	        }
+	        else
+	        {
+	        	lnuCountPressKey = 0;
+	        	resetCount();
+	            resetSesion();
+	            id_timeSesion = setInterval('fMuestraModalBox()', lnuTimeLayerShowQuestion);
+	            var iframe = document.getElementById("refreshIframe");
+				iframe.src = "/shell/af/core/session/UpdateSesionUser.do";
+	        }
+ }
+function cambio() {
+    if (intCont == 0) {
+        document.getElementById('msjSesion').innerHTML = '';
+        resetCount();
+        resetSesion();
+        fSession('Exit');
+    } else {
+        var lboTfContador = document.getElementById('tfContador');
+        if (lboTfContador != null) {
+            lboTfContador.value = intCont;
+            lboTfContador.blur();
+            intCont = intCont - 1;
+        }
+    }
+}
+function continuaSesion() {
+            document.getElementById('msjSesion').innerHTML = '';
+            resetCount();
+            resetSesion();
+            id_timeSesion = setInterval('fMuestraModalBox()', lnuTimeLayerShowQuestion);
+            var iframe = document.getElementById("refreshIframe");
+			iframe.src = "/shell/af/core/session/UpdateSesionUser.do";
+}
+
+function cierraSesion() {
+    document.getElementById('msjSesion').innerHTML = '';
+    resetCount();
+    resetSesion();
+    fSession('Exit_Home');
+}
+
+function resetCount() {
+    clearInterval(id_time15);
+    intCont = 30;
+}
+
+function resetSesion() {
+    clearInterval(id_timeSesion);
+}
+
+function fSession(pstAccion) {
+    if (pstAccion == "Exit") {
+    	clearInterval(id_timeSesion);
+    	window.location="/shell/af/core/visitor/logout.do?user=" + lstUser + "&registrado=" + lstUserReg + "&systemOutSession=SI";
+    	//window.location="/shell/af/FinalizaSesionTiendaTelmex.do?user=" + lstUser + "&registrado=" + lstUserReg;
+    }
+    if (pstAccion == "Exit_Home") {
+    	clearInterval(id_timeSesion);
+    	window.location="/shell/af/core/visitor/logout.do";
+    }
+}
+
+function addToCart(forma) {
+  	//alert("AGREGANDO A CARRITO.....");
+  	scrollTo(0,0);
+  	//var forma = document.forms[formName];
+  	myAjax=new ajax();
+    p=new panelRefresher();
+	myAjax.init();
+	//alert("INICIANDO AJAX BICLORO.....");
+	//alert("forma.contentId.value: " + forma.contentId.value);
+	myAjax.request("/shell/af/page/commerce/shopping/ajaxCart.do?oid=" + forma.contentId.value,p);
+	/*
+	var valorTipoRegion = document.getElementById("tipoRegion");
+	if( valorTipoRegion == null ){
+		myAjax.request("/shell/af/page/commerce/shopping/ajaxCart.do?oid=" + forma.contentId.value,p);
+	}else{
+		var lstUrlAjaxBicloro = "/shell/af/page/commerce/shopping/ajaxCart.do?oid=" + forma.contentId.value;
+		    lstUrlAjaxBicloro = lstUrlAjaxBicloro + "&tipoRegion=" + forma.tipoRegion.value;
+		    lstUrlAjaxBicloro = lstUrlAjaxBicloro + "&idRegionTelcel=" + forma.idRegionTelcel.value;
+		    lstUrlAjaxBicloro = lstUrlAjaxBicloro + "&idCiudadTelcel=" + forma.idCiudadTelcel.value;
+		    lstUrlAjaxBicloro = lstUrlAjaxBicloro + "&ciudadTelcel=" + forma.ciudadTelcel.value;
+		    lstUrlAjaxBicloro = lstUrlAjaxBicloro + "&cpCiudadTelcel=" + forma.cpCiudadTelcel.value;
+		myAjax.request(lstUrlAjaxBicloro,p);
+	}
+	*/
+}
+/*
+function addToCart(forma, isJQ, pstOid) {
+  	scrollTo(0,0);
+  	//var forma = document.forms[formName];
+  	myAjax=new ajax();
+    p=new panelRefresher();
+	myAjax.init();
+	var lstOid = "0";	
+	if(isJQ){
+		lstOid = pstOid;
+	}else{
+		lstOid = forma.contentId.value;
+	}
+	myAjax.request("/shell/af/page/commerce/shopping/ajaxCart.do?oid=" + lstOid,p);
+}*/
+
+var id_timeSessionOff = setTimeout("manejarSesion();", lnuTimeSessionOff);
+
+
+		function createCookieForAkamai(){
+			
+			var date = new Date();
+			date.setTime(date.getTime()+(1*24*60*60*1000));
+			var expires = "; expires="+date.toGMTString();
+			//document.cookie = "login=0" + expires + "; path=/; domain=.telmex.com";
+			document.cookie = "login=0" + expires + "; path=/";
+			//document.cookie = lstCookieNameVal+expires+"; path=/";
+			
+		}
+	
+createCookieForAkamai();
+</script>
+
+
+		</div>
+	
+
+<div id="body" align="center">
+  
+
+
+
+
+<link rel="stylesheet" href="/shell/xflow/kukini-commerce/docroot/core/css/estilos_login.css" type="text/css">
+<script type="text/javascript">
+  function updateCartItem(formName, quantity) {
+    var form = document.forms[formName];
+    form.quantity.value = quantity;
+    form.quantityDisplay.value = quantity;
+    form.submit();
+  }
+</script>
+
+
+<script>
+var dummyUrl = "/shell/dummy.do";
+
+//
+//
+//
+function encodeURL(url, parameters) {
+  url = dummyUrl.replace("dummy.do", url);
+ 
+  if (parameters != null) {
+    if (parameters.charAt(0) == '&') {
+      parameters = parameters.substring(1);
+    }
+
+    if (url.indexOf("?") < 0) {
+      url += "?";
+    }
+    else {
+      url += "&";
+    }
+ 
+    url += parameters;
+  }
+ 
+  return url;
+}
+</script>
+
+
+<div class="col1">
+  <div id="zone0" align="left">
+    
+ 
+ 
+ 
+ 
+ 
+ 
+ <div class="div-basemenu">
+ <div class="centrado2">
+   <div class="div-menu" style="width: 1050px;">
+        <ul class="menu" style="width: 1050px;">
+        	
+        		
+        		
+		        <li class="btn">
+		        	
+							
+									<a href="/shell/af/consultaProductosComputo.do?referencia=-8957">Cómputo y Tablets</a>
+								
+						
+	            	<ul>
+	         			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9496&amp;contentTypeId=0&amp;selectedChannels=-8957">Tablets</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-8987&amp;contentTypeId=0&amp;selectedChannels=-8957">Portátiles</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-8988&amp;contentTypeId=0&amp;selectedChannels=-8957">Escritorio</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-10052&amp;contentTypeId=0&amp;selectedChannels=-8957">Gaming</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9216&amp;contentTypeId=0&amp;selectedChannels=-8957">Multifuncionales</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9316&amp;contentTypeId=0&amp;selectedChannels=-8957">Conectividad WiFi</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9416&amp;contentTypeId=0&amp;selectedChannels=-8957">Software</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/content/EquipamientoPYME.do">Negocio</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         							
+	         					
+			   			
+		     		</ul>
+			    </li>
+			 
+        		
+        		
+		        <li class="btn">
+		        	
+							
+									<a href="/shell/af/consultaProductosComputo.do?referencia=-9918">Pantallas</a>
+								
+						
+	            	<ul>
+	         			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9436&amp;contentTypeId=0&amp;selectedChannels=-9918">HD - FHD</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9836&amp;contentTypeId=0&amp;selectedChannels=-9918">4K - UHD</a></li>
+	         					
+			   			
+		     		</ul>
+			    </li>
+			 
+        		
+        		
+		        <li class="btn">
+		        	
+							
+									<a href="/shell/af/consultaProductosComputo.do?referencia=-8976">Teléfonos</a>
+								
+						
+	            	<ul>
+	         			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9536&amp;contentTypeId=0&amp;selectedChannels=-8976">Celulares</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9876&amp;contentTypeId=0&amp;selectedChannels=-8976">Phablets</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-8977&amp;contentTypeId=0&amp;selectedChannels=-8976">Alámbricos</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9667&amp;contentTypeId=0&amp;selectedChannels=-8976">Inalámbricos</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9376&amp;contentTypeId=0&amp;selectedChannels=-8976">Equipos Multilínea</a></li>
+	         							
+	         					
+			   			
+		     		</ul>
+			    </li>
+			 
+        		
+        		
+		        <li class="btn">
+		        	
+							
+									<a href="/shell/af/consultaProductosComputo.do?referencia=-9656">Entretenimiento</a>
+								
+						
+	            	<ul>
+	         			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9456&amp;contentTypeId=0&amp;selectedChannels=-9656">Consolas</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9297&amp;contentTypeId=0&amp;selectedChannels=-9656">Videojuegos</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9336&amp;contentTypeId=0&amp;selectedChannels=-9656">Sistemas de Audio</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-10071&amp;contentTypeId=0&amp;selectedChannels=-9656">Bocinas</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-10072&amp;contentTypeId=0&amp;selectedChannels=-9656">GoPro</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9932&amp;contentTypeId=0&amp;selectedChannels=-9656">Drones</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9476&amp;contentTypeId=0&amp;selectedChannels=-9656">Libros de México</a></li>
+	         					
+			   			
+		     		</ul>
+			    </li>
+			 
+        		
+        		
+		        <li class="btn">
+		        	
+							
+									<a href="/shell/af/consultaProductosComputo.do?referencia=-9776">Hogar</a>
+								
+						
+	            	<ul>
+	         			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9922&amp;contentTypeId=0&amp;selectedChannels=-9776">Estufas</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9921&amp;contentTypeId=0&amp;selectedChannels=-9776">Refrigeradores</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9923&amp;contentTypeId=0&amp;selectedChannels=-9776">Lavadoras</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-10044&amp;contentTypeId=0&amp;selectedChannels=-9776">Monitores de Bebé</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-10043&amp;contentTypeId=0&amp;selectedChannels=-9776">Aparatos de Salud</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9931&amp;contentTypeId=0&amp;selectedChannels=-9776">Deportes</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-10045&amp;contentTypeId=0&amp;selectedChannels=-9776">Electrodomésticos</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-10046&amp;contentTypeId=0&amp;selectedChannels=-9776">Aires Acondicionados</a></li>
+	         					
+			   			
+		     		</ul>
+			    </li>
+			 
+        		
+        		
+		        <li class="btn">
+		        	
+							
+									<a href="/shell/af/consultaProductosComputo.do?referencia=-9659">Accesorios</a>
+								
+						
+	            	<ul>
+	         			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9296&amp;contentTypeId=0&amp;selectedChannels=-9659">Baterías Portátiles</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-10036&amp;contentTypeId=0&amp;selectedChannels=-9659">Logitech</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9937&amp;contentTypeId=0&amp;selectedChannels=-9659">Reguladores</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9934&amp;contentTypeId=0&amp;selectedChannels=-9659">Xbox</a></li>
+	         					
+			   			
+		     		</ul>
+			    </li>
+			 
+        		
+        		
+		        <li class="btn">
+		        	
+							
+									<a href="/shell/af/productosApple.do">Apple</a>
+								
+						
+	            	<ul>
+	         			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9816&amp;contentTypeId=0&amp;selectedChannels=-9916">iPad</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9919&amp;contentTypeId=0&amp;selectedChannels=-9916">iPhone</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9935&amp;contentTypeId=0&amp;selectedChannels=-9916">Accesorios</a></li>
+	         					
+			   			
+		     		</ul>
+			    </li>
+			 
+        		
+        		
+		        <li class="btn">
+		        	
+							
+									<a href="/shell/af/core/nav/categoryBrowse.do?categoryId=-9930&amp;contentTypeId=0&amp;selectedChannels=-9926">Motocicletas</a>
+								
+						
+	            	<ul>
+	         			
+	         				
+	         					
+			   			
+		     		</ul>
+			    </li>
+			 
+        		
+        		
+		        <li class="btn">
+		        	
+							
+									<a href="/shell/af/core/content/EquipamientoPYME.do">Negocio</a>
+								
+						
+	            	<ul>
+	         			
+		     		</ul>
+			    </li>
+			 
+        		
+        		
+		        <li class="btn">
+		        	
+							
+									</li><li style="background-color: #ed1c24; line-height:40px;"><a href="/shell/af/ventaEspecial.do?categoryId=-10096"><strong>WOW</strong></a></li>
+								
+						
+	            	<ul>
+	         			
+		     		</ul>
+			    
+			 
+			
+		</ul>
+	</div>
+	
+   </div>
+</div>
+
+
+  </div>
+</div>
+<div id="msjSesion" style="z-index:950;"> </div>
+	
+		<ul id="nav_compra">                    
+                    <li><img src="/shell/xflow/kukini-commerce/docroot/core/images/barra_carrito_1.gif"></li>
+                    <li><img src="/shell/xflow/kukini-commerce/docroot/core/images/barra_registo.gif"></li>
+                    <li><img src="/shell/xflow/kukini-commerce/docroot/core/images/barra_formas.gif"></li>
+                    <li><img src="/shell/xflow/kukini-commerce/docroot/core/images/barra_datos.gif"></li>
+                    <li><img src="/shell/xflow/kukini-commerce/docroot/core/images/barra_confirmacion.gif"></li>
+                    <li><img src="/shell/xflow/kukini-commerce/docroot/core/images/barra_pedido.gif"></li>
+               </ul><table width="0" border="0" align="center" cellpadding="0" cellspacing="0">
+                <tbody><tr>
+                    <td>&nbsp;</td> 
+                    <td>&nbsp;</td>
+					<td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+                
+               <tr>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                    <td>&nbsp;</td>
+                </tr>
+            </tbody></table>
+            <div>&nbsp;</div>
+            <div style="width:838px;" id="tit_secc_azul" class="tit_secc_azul" align="left">
+            	Bolsa de Compras
+            </div>
+			<div>&nbsp;</div>
+            
+            
+            <table width="838" border="0">
+            <tbody><tr bgcolor="#085A9B">
+            				<td height="2" colspan="11">
+          				</td></tr>
+          				<tr>
+            				<td height="3" colspan="11">
+          				</td></tr>
+            <tr>
+            				<td width="5" class="bak_separador_puntos_v">&nbsp;</td>
+            				<td width="95" height="20" bgcolor="#E4E4E4" class="txt_general_bold"><div align="center">Cantidad</div></td>
+            				<td width="5" class="bak_separador_puntos_v">&nbsp;</td>
+				            <td width="210" bgcolor="#E4E4E4" class="txt_general_bold"><div align="center">Producto</div></td>
+				            <td width="5" class="bak_separador_puntos_v">&nbsp;</td>
+				            <td width="210" bgcolor="#E4E4E4" class="txt_general_bold" align="center">Precio</td>
+				            <td width="23" class="bak_separador_puntos_v">&nbsp;</td>
+				            <td width="160" bgcolor="#E4E4E4" class="txt_general_bold"><div align="center">Importe</div></td>
+				            <td width="5" class="bak_separador_puntos_v">&nbsp;</td>
+				            <td width="60" bgcolor="#E4E4E4">&nbsp;</td>
+				            <td width="5" class="bak_separador_puntos_v">&nbsp;</td>
+          				</tr>
+          				<tr>
+            				<td colspan="11" class="bak_separador_puntos_h">
+          				</td></tr>
+          				
+						    
+
+
+
+
+<!-- <bac>050_PORTAL-TIENDA-AGREGAR</bac> -->
+
+  <tr>
+    <form action="/shell/af/commerce/shopping/displayShoppingCart.do?flow.ctxID=1564940434781{0,4}&amp;flow.seqID=1564940434893" method="post" name="updateCartForm0" id="updateCartForm0"></form>
+    <input name="contentId" type="hidden" value="21700">
+    <input name="quantity" type="hidden" value="1">
+    <input name="event" type="hidden" value="updateCartItem">
+    <td width="5" class="bak_separador_puntos_v">&nbsp;</td>
+    <td>
+    
+          <input type="button" value="-" class="inputButton" onclick="updateCartItem('updateCartForm0', (1-1));">
+          <input name="QUANTITY" type="text" value="1" size="1" id="quantityDisplay" disabled="disabled">
+       		<input type="button" value="+" class="inputButton" onclick="updateCartItem('updateCartForm0', (1+1));">
+        
+    </td>
+    <td width="5" class="bak_separador_puntos_v">&nbsp;</td>
+    <td align="left" width="330">
+    	Lavadora automática con Tapa Cristal 16 kg Easy Blanco
+    	
+    </td>
+    <td width="5" class="bak_separador_puntos_v">&nbsp;</td>
+    <td align="right">
+    <table border="0" width="100%">
+    	
+    	    <!-- <bac>contado</bac> -->
+    	    <tbody><tr>
+    		  <td align="left">
+    		     Contado
+    		  </td>
+    		  
+		    		  <td align="right" class="txt_precio">
+    					 $&nbsp;7,789
+    		  		  </td>
+	    		  
+    	    </tr>
+    	  
+    	
+    	
+    	 
+    	    <!-- <bac>mensualidades</bac> -->
+    	    
+    	    <tr>
+    		  <td align="left"><br>
+    		    Mensualidades desde
+    		    
+    		  </td>
+      		  <td align="right" class="txt_precio"><br>
+    			   $&nbsp;525
+    		  </td>
+    	    </tr>
+    	   
+    	
+    </tbody></table>
+   
+    
+    </td>
+    <td width="5" class="bak_separador_puntos_v">&nbsp;</td>
+    <td align="right">
+      <table border="0" width="100%">
+    	<tbody><tr>
+    		<td align="left">
+    		Contado
+    		</td>
+   		  	
+    				<td align="right" class="txt_precio">
+    			 		$&nbsp;7,789
+    				</td>
+	    		
+    	</tr>
+    </tbody></table>
+    </td>
+    <td width="5" class="bak_separador_puntos_v">&nbsp;</td>
+    <td align="center">
+      
+          <input type="button" value="Borrar" class="inputButtonRight" onclick="updateCartItem('updateCartForm0', 0);">
+        
+    </td>
+    <td width="5" class="bak_separador_puntos_v">&nbsp;</td>
+    
+  </tr>
+  <tr>
+	<td colspan="11" class="bak_separador_puntos_h">
+  </td></tr>
+
+
+
+						  
+          				<tr bgcolor="#FFFFFF">
+            				<td height="8" colspan="11">
+          				</td></tr>
+		  				<tr bgcolor="#085A9B">
+            				<td height="2" colspan="11">
+          				</td></tr>
+		    					
+								  
+          				<tr valign="bottom">
+
+							<td height="20" colspan="11" class="txt_general_nota">Precios expresados en Moneda Nacional con IVA incluido.</td>
+				
+	      				</tr>
+      				    
+          	</tbody></table>
+<table width="838">
+  <tbody><tr>
+    <td>
+        
+
+        
+        <div class="row">
+        <form action="/shell/af/commerce/shopping/displayShoppingCart.do?flow.ctxID=1564940434781{0,4}&amp;flow.seqID=1564940434893" method="get" name="AddToCartForm" id="AddToCartForm">
+          <div class="label" align="right">
+            
+            <input type="Button" value="Agregar otro producto" class="frm_boton_gris_tienda" onclick="javascript:getURL('/shell/af/commerce/shopping/displayShoppingCart.do?flow.ctxID=1564940434781{0,4}&amp;flow.seqID=1564940434893&amp;event=continue')">
+            
+            
+                &nbsp;&nbsp;
+                <input type="Button" value="Siguiente" class="frm_boton_azul_tienda" onclick="javascript:getURL('/shell/af/commerce/shopping/ValidaLadaSoft.do')">
+                
+              
+            &nbsp;
+          </div>
+        </form>
+        </div><br>
+
+      
+    </td>
+  </tr>
+</tbody></table>
+
+<script type="text/javascript">
+  function updateCartitem(formName, quantityValue) {
+    var form = document.forms[formName];
+    form.quantity.value = quantityValue;
+    form.quantityDisplay.value = quantityValue;
+    form.submit();
+  }
+
+  function gotoAuditTrail(theForm) {
+   var auditUrl = encodeURL('/af/page/commerce/merchandising/auditTrail.do?auditType=price');
+   var win=window.open(auditUrl , 'AuditTrail', 'width=500,height=650,resizable=yes,scrollbars=yes,status=0');
+  
+   if (win.opener == null) {
+     win.opener = self;
+   }
+   win.moveTo(0,0);
+   return false;
+  }
+  function getURL(url){
+    //if( lstFinSession == "NO" )
+    //{
+  		window.location=url;
+  	//}
+  	//else
+  	//{
+  		//window.location = "/shell/af/home.do";
+  	//}
+  }
+init();
+</script>
+
+<script>
+
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '2211292122482525');
+  fbq('track', 'PageView');
+
+</script>
+<script>
+  fbq('track', 'AddToCart');
+</script>
+<noscript>
+
+<img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=2211292122482525&ev=PageView&noscript=1"/>
+
+</noscript>
+
+
+
+</div>
+
+
+		<div id="footer">
+		  
+
+
+
+
+<!-- BEGIN core/home/footer.xform -->
+<br>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tbody><tr>
+	<td>
+		<div class="div-footer">
+		
+				<p><span class="txt_preciocta">Precios exclusivos en línea.</span><br>
+				   <img src="/shell/xflow/kukini-commerce/docroot/core/images/transparent.gif" border="0" width="100%" height="6"><br>
+				   <span class="txt_notasgris">Precios expresados en Moneda Nacional en montos totales.</span>
+				</p>
+			
+				<div class="line-gris"> </div>
+				<span class="txt_notasgris"><a href="/shell/af/soporte.do" class="lnk_notagris">Asistencia y Soporte</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/shell/af/ConsultaCAT.do" class="lnk_notagris">Consulta CAT</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://www.telmex.com/web/acerca-de-telmex/aviso-de-privacidad" class="lnk_notagris" target="Aviso_Privacidad">Aviso de privacidad</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/shell/af/politicas.do" class="lnk_notagris">Políticas de Tienda en línea</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/shell/af/garantias.do" class="lnk_notagris">Garantías</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/shell/af/seguridad.do" class="lnk_notagris">Seguridad</a>&nbsp;&nbsp;|&nbsp;</span><img src="/shell/xflow/kukini-commerce/docroot/core/images/veriSign.gif" width="63" height="39"><br>
+				<img src="/shell/xflow/kukini-commerce/docroot/core/images/transparent.gif" border="0" width="100%" height="6"><br>
+				<span class="txt_nota-azul">© Derechos Reservados, Teléfonos de México S.A.B. de C.V.</span>
+		</div>
+	</td>
+</tr>
+</tbody></table>
+
+
+
+<!-- END core/home/footer.xform -->
+<script type="text/javascript">
+
+		var lstNombreUsr = '';
+		var lstTelefonoUsr = '';
+	
+<!--//
+function fnOpenChat()
+{
+    var UrlChat = "http://chat.clientesweb.net/codechat/ventascode/clientesweb/ventas/default.aspx?department=8361";
+	var myWindow = window.open(UrlChat,"Asistencia","width=371,height=362,resizable=yes,location=no");
+	/*
+	var UrlChat = ""; 
+	if( lstTelefonoUsr != "")
+	{
+		lstNombreUsr = lstNombreUsr.replace(' ',"");
+		if( lstNombreUsr.length > 15 )
+		{
+		    lstNombreUsr = lstNombreUsr.substr(0,15);
+		}
+	    UrlChat = "http://tmkc115.tecmarketing.com/website/paquetes/chatinicioV1.jsp?Nombre=" + lstNombreUsr + "&Telefono=" + lstTelefonoUsr + "&Mensaje=ASESORIA VENTA ONLINE&Pagina=Ventaprodtelmex";
+		var myWindow = window.open(UrlChat,"Asistencia","width=377,height=381");
+	}
+	else
+	{
+		UrlChat = "/shell/xflow/kukini-commerce/docroot/core/html/DatoschatEnLinea.htm";
+		var myWindow = window.open(UrlChat,"Asistencia","width=315,height=230");
+	}*/
+	return;
+}
+-->
+
+</script>
+
+
+		</div>
+	
+
+</div>
+<script type="text/javascript" src="/shell/xflow/kukini-commerce/docroot/commerce/js/tienda-telmex-analytics.js"> </script>
+<script type="text/javascript" src="/shell/xflow/kukini-commerce/docroot/js/JQfunction.js"> </script><iframe height="0" width="0" style="display: none; visibility: hidden;" src="//6082817.fls.doubleclick.net/activityi;src=6082817;type=allsi0;cat=tiend0;ord=3426338947132;gtm=2wg7o0;auiddc=2036137966.1564940422;u6=https%3A%2F%2Ftienda.telmex.com%2Fshell%2Faf%2Fcommerce%2Fshopping%2FdisplayShoppingCart.do;~oref=https%3A%2F%2Ftienda.telmex.com%2Fshell%2Faf%2Fcommerce%2Fshopping%2FdisplayShoppingCart.do?"></iframe>
+
+
+	
+
+<iframe height="0" width="0" style="display: none; visibility: hidden;" src="//6082817.fls.doubleclick.net/activityi;src=6082817;type=funne0;cat=tiend0;ord=1;num=2467158670041;gtm=2wg7o0;auiddc=2036137966.1564940422;~oref=https%3A%2F%2Ftienda.telmex.com%2Fshell%2Faf%2Fcommerce%2Fshopping%2FdisplayShoppingCart.do?"></iframe><script type="text/javascript" id="">for(var links=document.getElementsByTagName("img"),k=0;k<links.length;k++){var nombre=links[k].getAttribute("src");"/shell/xflow/kukini-commerce/docroot/core/images/barra_carrito_1.gif"==nombre&&dataLayer.push({event:"addpage",pageview:"carrito.html",pagetitle:"Paso Carrito"});"/shell/xflow/kukini-commerce/docroot/core/images/barra_registro_1.gif"==nombre&&dataLayer.push({event:"addpage",pageview:"registro.html",pagetitle:"Paso Registro"});"/shell/xflow/kukini-commerce/docroot/core/images/barra_formas_1.gif"==
+nombre&&dataLayer.push({event:"addpage",pageview:"forma_pago.html",pagetitle:"Paso Forma de Pago"});"/shell/xflow/kukini-commerce/docroot/core/images/barra_datos_1.gif"==nombre&&dataLayer.push({event:"addpage",pageview:"datos_envio.html",pagetitle:"Paso Datos de Envio"});"/shell/xflow/kukini-commerce/docroot/core/images/barra_confirmacion_1.gif"==nombre&&dataLayer.push({event:"addpage",pageview:"confirma.html",pagetitle:"Paso Confirmacion"});"/shell/xflow/kukini-commerce/docroot/core/images/barra_pedido_1.gif"==
+nombre&&dataLayer.push({event:"addpage",pageview:"pedido.html",pagetitle:"Paso Folio"})};</script></body></html>

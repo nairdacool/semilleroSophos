@@ -1,0 +1,2060 @@
+<html><head>
+<link rel="shortcut icon" href="/shell/xflow/kukini-commerce/docroot/core/images/favicon.ico">
+<title>Tienda Telmex - Computadoras, Laptops, Consolas Videojuegos, Mensualidades Recibo Telmex.</title>
+<meta http-equiv="Description" content="Compra en mensualidades con cargo a tu recibo, computadoras, laptops, netbooks, consolas videojuegos, Meses sin intereses, teléfonos, iPod, XBOX, Wii, HP, ACER, COMPAQ, Mac.">
+<meta http-equiv="Keywords" content="tienda, Telmex, computadora, laptop, consola, videojuego, video, juego, mensualidades, recibo, meses sin intereses, Xbox, ipod, touch, teléfonos, telefonía, fax, scanner, hp, compaq, acer, wii">
+<meta name="google-site-verification" content="LHmzL3yCEq1RWRqZPI-yfPuAymFx4ncAAjQdWkRNNi8">
+
+	
+
+<link rel="stylesheet" href="/shell/xflow/kukini-commerce/docroot/core/css/popup.css" type="text/css">
+<link rel="stylesheet" href="/shell/xflow/kukini-commerce/docroot/core/css/bonos.css" type="text/css">
+<link rel="stylesheet" href="/shell/xflow/kukini-commerce/docroot/core/css/modalbox.css" type="text/css">
+<link rel="stylesheet" href="/shell/xflow/kukini-commerce/docroot/core/css/estilos-tda.css" type="text/css">
+
+<!--[if lt IE 9]>
+<link rel="stylesheet" type="text/css" href="/shell/xflow/kukini-commerce/docroot/core/css/estilos-IE8.css" />
+<![endif]-->
+<!--[if lte IE 8]>
+<link rel="stylesheet" type="text/css" href="/shell/xflow/kukini-commerce/docroot/core/css/estilos-IE8.css" />
+<![endif]-->
+
+<script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script async="" src="//www.googletagmanager.com/gtm.js?id=GTM-NRSZ4G"></script><script type="text/javascript" src="/shell/xflow/kukini-commerce/docroot/commerce/js/common.js"> </script>
+<script src="/shell/xflow/kukini-commerce/docroot/js/jquery-1.11.1.min.js"> </script>
+<script src="/shell/xflow/kukini-commerce/docroot/js/jquery-ui-1.10.4.custom.min.js"> </script>
+<link rel="stylesheet" href="/shell/xflow/kukini-commerce/docroot/core/css/jquery-ui-1.10.4.custom.css">
+<script src="/shell/xflow/kukini-commerce/docroot/js/jquery_placeholder.js"> </script>
+<script src="/shell/xflow/kukini-commerce/docroot/js/html5Inputs.js"> </script>
+<script src="/shell/xflow/kukini-commerce/docroot/js/jquery.blockUI.js"> </script>
+<script type="text/javascript">
+var lstNumClickAddCart = 0;
+var $j = jQuery.noConflict();
+var lnuNumProdShoppingCart = 0;
+<!--//
+/**
+ * 
+ * @classDescription ajax define una clase para realizar petiocines AJAX, con el objeto 
+ * XMLHttpRequest, funciona para la mayoria de los navegadores, los metodos init y request
+ * sirven para inicializar y para realizar una peticion asincrona respectivamente
+ * 
+ * @method init realiza la inicializacion de el objeto ajaxObj, que contiene la referencia
+ * a una instancia de XMLHttpRequest
+ * 
+ * @method request realiza una conexion asincrona , recibe como parametros la url a la que
+ * va a realizar la conexión y y el objeto que va a ejecutar, este objeto debe implementar los
+ * metodos doOnLoading() y doOnSucess(XMLHttpRequest)
+ * 
+ * 
+ */
+ 
+
+
+function ajax(){
+	
+	var ajaxObj=null;
+	
+	this.init= function(){		
+		if (window.XMLHttpRequest) {// Si es Mozilla, Safari etc
+			ajaxObj = new XMLHttpRequest()
+		}else if (window.ActiveXObject){ // pero si es IE	
+			try {
+				ajaxObj = new ActiveXObject("Msxml2.XMLHTTP")
+			}catch (e){ // en caso que sea una versión antigua
+				try{					
+					ajaxObj = new ActiveXObject("Microsoft.XMLHTTP")
+		    	}catch (e){}
+			}
+		}else ajaxObj=null;
+	}
+	
+	this.request=function(url,object){
+		
+		if(ajaxObj == null)return null;
+		
+		ajaxObj.onreadystatechange=function(){
+		if (ajaxObj.readyState==1)object.doOnLoading()
+        if (ajaxObj.readyState == 4 && 
+		    (ajaxObj.status==200 || window.location.href.indexOf("http")==-1))
+			object.doOnSuccess(ajaxObj);
+		}
+		ajaxObj.open('GET', url, true)	
+		ajaxObj.send(null)
+	}
+}
+
+//function $(id){    
+    //return document.getElementById(id);
+//}
+
+function elementsById(id){
+    var nodes = [];
+    var tmpNode = document.getElementById(id);
+    while(tmpNode){
+        nodes.push(tmpNode);
+        tmpNode.id = "\\";
+        tmpNode = document.getElementById(id);
+    }
+    for(var x=0; x<nodes.length; x++){
+        nodes[x].id = id;
+    }
+    return nodes;
+}
+
+
+
+
+
+
+
+function panelRefresher(){
+	
+		this.doOnLoading=function(){
+			document.getElementById("cartcontent").innerHTML="<div id='cartcontent'>Cargando</div>";					
+		}
+	
+		this.doOnSuccess=function(pAjaxObj){
+		var lstContent = pAjaxObj.responseText;
+		var lnuPositionInitialStr = lstContent.indexOf("<car id=\"numProdCarro\" value=\"");
+		var lnuPositionFinalStr = -1;
+		var lstNumProdCar = 0;
+		if( lnuPositionInitialStr != -1 ){
+			lnuPositionFinalStr = lstContent.indexOf("\"",lnuPositionInitialStr + 30)
+			lstNumProdCar = lstContent.substring(lnuPositionInitialStr + 30, lnuPositionFinalStr);
+			document.getElementById("divNumProdCar").innerHTML = lstNumProdCar;
+			//alert("ADD....");
+			//document.getElementById("dialogo").innerHTML=lstContent;
+			//getAddProdCart("");
+		}else{
+			document.getElementById("divNumProdCar").innerHTML = "0";
+		}
+		
+			document.getElementById("cartcontent").innerHTML=lstContent;
+			if( lstNumClickAddCart == 1 )
+			{
+				window.location="/shell/af/commerce/shopping/displayShoppingCart.do";
+			}
+			//alert("Producto agregado.....");
+			//document.getElementById(divProdCarrito).style.visibility= "visible";
+			//document.getElementById("cartcontent").style.visibility= "visible";			
+		}
+	}
+
+
+function getCart(){
+	myAjax=new ajax();
+    p=new panelRefresher()
+	myAjax.init();
+	myAjax.request("/shell/af/page/commerce/shopping/ajaxCart.do",p);
+}
+function getAddProdCart(pstContenido)
+{
+alert("crea modal.....");
+	
+  $j(document).ready(function(){
+	$j("#dialogo").dialog({
+			title: "Carrito de compras",
+			width: 315,  
+			height: 260,
+			show: "scale", 
+			hide: "scale", 
+			resizable: "false", 
+			position: "center",
+			modal: "true",
+			close: function() { 
+            $j(document).unbind('click'); }
+	});
+  });
+}
+function fnDialogPoliticas()
+{
+  $j(document).ready(function(){
+	$j("#dialogPoliticas").dialog({
+			title: "Políticas de Tienda en Línea",
+			width: 680,  
+			height: 360,
+			show: "scale", 
+			hide: "scale", 
+			resizable: "false", 
+			position: "center",
+			modal: "true",
+			close: function() { 
+            $j(document).unbind('click'); }
+	});
+  });
+}
+$j('body').bind('click', function(e) {
+        if( $j('#dialogo').dialog('isOpen') ) {
+            $j('#dialogo').dialog('close');
+        }
+    });
+
+-->
+
+</script>
+
+<script type="text/javascript">
+
+//alert(window.location.hostname+' - '+window.location.protocol+' - '+window.location.pathname+' - '+window.location.href);
+var lstUrl = window.location.href;
+var lnuPosPageValida1 = lstUrl.search("displayShoppingCart");
+var lnuPosPageValida2 = lstUrl.search("ValidaLadaSoft");
+var lnuPosPageValida3 = lstUrl.search("CapturaDatosEnvio");
+if(lnuPosPageValida1 > 0 || lnuPosPageValida2 > 0 || lnuPosPageValida3 > 0){
+    window.smartlook||(function(d) {
+    var o=smartlook=function(){ o.api.push(arguments)},h=d.getElementsByTagName('head')[0];
+    var c=d.createElement('script');o.api=new Array();c.async=true;c.type='text/javascript';
+    c.charset='utf-8';c.src='//rec.smartlook.com/recorder.js';h.appendChild(c);
+    })(document);
+    smartlook('init', '3997baf7431f7df55308f5fd5afaeee68f0d7b2b');
+}
+
+</script>
+
+</head>
+<body onkeypress="javascript:fnCountKeyPress();"><div style="display: none;">
+
+<iframe src="" name="refreshIframe" id="refreshIframe" width="1" height="1"></iframe>
+<iframe src="" name="sessionOff" id="sessionOff" width="1" height="1"></iframe>
+
+</div>
+<script language="JavaScript">
+var lnuCountPressKey = 0;
+
+function fnCountKeyPress()
+{
+	lnuCountPressKey = lnuCountPressKey + 1;
+}
+</script>
+
+<iframe height="0" width="0" style="display: none; visibility: hidden;" src="//6082817.fls.doubleclick.net/activityi;src=6082817;type=allsi0;cat=tiend0;ord=7993874595406;gtm=2wg7o0;auiddc=1124269531.1564959441;u6=https%3A%2F%2Ftienda.telmex.com%2Fshell%2Faf%2Fhome.do;~oref=https%3A%2F%2Ftienda.telmex.com%2Fshell%2Faf%2Fhome.do?"></iframe><div align="center">
+<div id="superheader">
+  
+
+
+
+
+<div id="tab_header_home_pendiente">
+	
+	
+	<div class="div-gris">
+		<ul class="lstgris">
+			 <li><a href="#"><strong>800 123 1114</strong></a></li>
+			 <li><a href="#">Asistencia</a>
+			     <ul>
+			        <li style="text-align: left;"><a href="http://www.telmex.com/web/asistencia/hogar-preguntas-frecuentes-tienda-en-linea" target="_blank">Preguntas Frecuentes</a></li>
+			        <li style="text-align: left;"><a href="javascript:fnOpenChat();">Chat en línea</a></li>
+			     </ul>
+			 </li>
+			 <li><a title="Directorio de Centros" href="http://telmex.com/web/buscador?q=&amp;output=xml_no_dtd&amp;oe=UTF-8&amp;ie=UTF-8&amp;client=_nuevo_telmex_lugares&amp;proxystylesheet=_nuevo_telmex_lugares&amp;entqr=3&amp;entqrm=0&amp;ud=1&amp;getfields=*&amp;site=tiendas_fisicas|sitios_wifi|cibercafes&amp;filter=0&amp;requiredfields=&amp;giro=Mostrar+todo&amp;estado=Mostrar+todo" target="Centros_Telmex">Localiza tu Centro de Atención Telmex</a></li>
+			 <li>
+			 
+			 </li><li><a href="/shell/af/FacturaElectronica.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375">Factura Electrónica</a></li>
+			 <li>
+			 
+			 </li><li><a title="Ofertas Telmex" href="http://www.claroshop.com" target="_blank"><strong><font class="aldea_digital">Claro shop</font></strong></a></li>
+			 
+			 <li>
+			 </li><li><a href="http://telmex.com"><strong><font class="telmexcom">telmex.com</font></strong></a></li>
+			 <li>
+			 
+		 </li></ul>
+	</div>
+</div>
+
+
+</div>
+
+
+		<div class="centrado">
+  			
+
+
+
+
+
+
+
+<script>
+        /*
+        function obtenerPuerto(){
+        	var tipoUsuario = document.querySelector('input[name=tipoLogin]:checked').value;
+        	console.log('Valor del tipo de usuario: ' + tipoUsuario);
+        	if(tipoUsuario === 'Negocio'){
+        		return;
+        	}
+        	$j.ajax({
+        		url: 'https://tiendaip.telmex.com/PageInfo/userInfo.jsp',
+        		timeout: 5000,
+				dataType: "jsonp",
+        		success: function (respuesta) {
+					if(respuesta.Puerto==="null" || respuesta.Puerto===null || respuesta.Puerto==="" || typeof respuesta.Puerto === "undefined"){
+						var usuario = document.getElementById("userH").value;
+        				var mensaje = usuario + '|' + respuesta + '|RESPUESTA';
+					    $j.get( "/shell/af/registroMsgJS.do", { mensajeJS:mensaje } );
+					} else {
+						var txtPuerto = $j( "#puertoUsuario" );
+						txtPuerto.val(respuesta.Puerto);
+					}
+        		},
+        		error: function(req, status, err){
+						var usuario = document.getElementById("userH").value;
+        				var mensaje = usuario + '|' + err + '|ERROR';
+					    $j.get( "/shell/af/registroMsgJS.do", { mensajeJS:mensaje } );
+        		}
+		    });
+        }
+        */
+</script>
+
+
+
+<div class="logo">
+     <a href="/shell/af/home.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375"><img src="/shell/xflow/kukini-commerce/docroot/core/images/logo_tienda_telmex.png" border="0"></a>
+</div>
+<div class="bansuper">
+	<div id="searchform">
+			
+<!-- BEGIN core/search/simpleQuery.xform -->
+<script language="JavaScript">
+
+function fEnviaBusqueda()
+{
+	with( document.simpleQueryForm )
+	{
+		if(query.value != "")
+		{
+			document.simpleQueryForm.submit();
+		}
+	}
+}
+
+</script>
+
+<!-- END core/search/simpleQuery.xform -->
+<form action="/shell/af/core/search/search.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375" method="get" name="simpleQueryForm" id="buscador1">
+    <input name="catalogs" type="hidden" value="COMMERCEPRODUCT">
+    
+    <input name="query" type="text" value="Ingresa tu busqueda..." class="buscador" id="textInputSearch" placeholder="Ingresa tu busqueda..." onblur="if (this.value == '') {this.value = 'Ingresa tu busqueda...';}" onfocus="if (this.value == 'Ingresa tu busqueda...') {this.value = '';}"> 
+    <input type="button" value="" id="botonbuscar1" class="btn_buscador" onclick="fEnviaBusqueda()">
+  </form>
+
+	</div>
+</div>
+<div class="conte-car">
+  <ul class="lst-carrito">
+      <li>
+	  	<a href="#">
+	  	   <div class="carrito"> 
+   		 	   <span class="amarillo" style="margin-left:18px; margin-top:3px;">
+   		 	   		<div id="divNumProdCar">0</div>
+   		   	   </span>
+		   </div>
+		</a>
+        <ul>
+          <li style="background-color:#f4f4f4;">
+		    <div class="div-cta">
+		    	<div class="div-producto">
+			    	<div id="cart">
+	  		  			
+  <div id="cartcontent">
+
+
+
+
+
+
+
+<script>
+var dummyUrl = "/shell/dummy.do";
+
+//
+//
+//
+function encodeURL(url, parameters) {
+  url = dummyUrl.replace("dummy.do", url);
+ 
+  if (parameters != null) {
+    if (parameters.charAt(0) == '&') {
+      parameters = parameters.substring(1);
+    }
+
+    if (url.indexOf("?") < 0) {
+      url += "?";
+    }
+    else {
+      url += "&";
+    }
+ 
+    url += parameters;
+  }
+ 
+  return url;
+}
+</script>
+
+
+
+
+	  
+									         
+
+<table border="0" cellpadding="0" cellspacing="0" width="100%">
+ 
+  <tbody><tr>
+      
+    <td> 
+        
+
+
+
+
+
+
+    </td></tr><tr>
+      
+      <td align="center"><span class="txt_producto">Tu bolsa está vacía.</span></td>
+    </tr>
+  
+
+
+
+
+
+    
+  
+  
+
+<tr>
+	<td colspan="2" align="right">
+		<form action="/shell/af/page/commerce/shopping/ajaxCart.do?flow.ctxID=1564959442031{0,3}&amp;flow.seqID=1564959442063" method="get" name="AddToCartForm" id="AddToCartForm"> 
+        
+		</form>
+	</td>
+</tr>
+</tbody></table>  
+      
+
+
+<script type="text/javascript">
+  function updateCartitem(formName, quantityValue) {
+    var form = document.forms[formName];
+    form.quantity.value = quantityValue;
+    form.quantityDisplay.value = quantityValue;
+    form.submit();
+  }
+
+  function gotoAuditTrail(theForm) {
+   var auditUrl = encodeURL('/af/page/commerce/merchandising/auditTrail.do?auditType=price');
+   var win=window.open(auditUrl , 'AuditTrail', 'width=500,height=650,resizable=yes,scrollbars=yes,status=0');
+  
+   if (win.opener == null) {
+     win.opener = self;
+   }
+   win.moveTo(0,0);
+   return false;
+  }
+</script>
+
+
+</div>
+  <script type="text/javascript">
+  	getCart();
+  </script>
+
+		    		</div>
+              
+			    </div>
+            </div>
+          </li>
+        </ul>
+      </li>  
+  </ul> 
+</div>
+<form action="/shell/af/page/header.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?flow.ctxID=1564959440702{0,3}&amp;flow.seqID=1564959440712" method="post" name="formNumberProdCar" id="formNumberProdCar">
+	<input name="hdNumProdCar" type="hidden" value="0">
+</form>
+<div class="div-usuario" id="div-usuario">
+
+		
+				<ul class="lst-usuario" id="lst-usuario">
+					<li>
+						<a href="/shell/af/commerce/shopping/ValidaLadaSoft.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?SMF=1">
+							<span style="padding-right:5px;">
+								<img src="/shell/xflow/kukini-commerce/docroot/core/images/ic_usuario.gif" width="15" height="20" border="none">
+							</span>
+							Bienvenido, ingresa aquí.
+						</a>
+					</li>  
+				</ul>
+			
+				
+	
+</div>
+<div id="opcionesNegocio" class="div_modal" style="display:none;">
+	<span class="tit-caract">Selecciona un negocio y un número de teléfono</span>
+	<br><br>
+	<span class="txt_descprod">
+		<br>
+		El correo electrónico proporcionado está registrado en Mi Telmex con los siguientes
+		negocios y números asociados, selecciona el negocio y el número de teléfono para el
+		cual deseas registrar la compra.
+	</span>
+	<br><br>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0">
+		<tbody><tr>
+			<td width="40%" height="45" align="right"><span class="txt_descprod"><strong>Negocio :&nbsp;</strong></span> </td>
+			<td width="60%">
+				<select name="listNegocios" id="listNegocios">
+			</select></td>
+		</tr>
+		<tr>
+			<td height="45" align="right"><strong><span class="txt_descprod">Número de teléfonos :&nbsp;</span></strong></td>
+			<td>
+				<select name="listTelefonos" id="listTelefonos">
+			</select></td>
+		</tr>
+	</tbody></table>
+</div>
+
+<div id="telefonosAdicionales" class="div_modal" style="display:none;">
+<form action="/shell/af/page/header.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?flow.ctxID=1564959440702{0,3}&amp;flow.seqID=1564959440712" method="post" name="formaTelAdicional" id="formaTelAdicional">
+	<span class="tit-caract">Selecciona el número de teléfono para el que quieres realizar la compra.</span>
+	<br><br>
+	<table width="100%" border="0" cellpadding="0" cellspacing="0" id="telefonosAdicionalesTab">
+		<tbody>
+		</tbody>
+	</table>
+</form>
+</div>
+<div title="Dialogo Modal" id="dialogo" class="ventanaCarrito">
+	<p>Esto es un dialogo modal, por lo que la web queda bloqueada mientras esta abierta</p>
+</div>
+
+
+
+<script language="JavaScript">
+var lstUserReg = "NO";
+var lboEsUsuarioRegistrado = 'false';
+var lstUser = 'anonymous';
+if( lboEsUsuarioRegistrado == "true" )
+{
+	lstUserReg = "SI";
+}
+var lstFinSession = "NO";
+var id_timeSession = "";
+var lnuTimeSessionOff = 420 * 1000;
+var lnuTimeLayerShowQuestion = 150 * 1000;
+
+
+function manejarSesion()
+{
+   lstFinSession = "SI";
+   var iframe = document.getElementById("sessionOff");
+   iframe.src = "/shell/af/FinalizaSesionTiendaTelmex.do?user=" + lstUser + "&registrado=" + lstUserReg;
+}
+
+var id_timeSesion = null;
+var id_time15 = null;
+var intCont = 30;
+function init() {
+	 clearInterval(id_timeSessionOff);
+	 id_timeSesion = setInterval('fMuestraModalBox()', lnuTimeLayerShowQuestion);
+}
+
+function fMuestraModalBox() {
+			scrollTo(0,0);
+			if( lnuCountPressKey <= 0 )
+	 		{
+	            var lstHtml = '';
+	            lstHtml = lstHtml + '<center><div style="" id="MB_frame"><div id="MB_header"><div id="MB_caption">Tu sesión está por expirar.</div><div id="MB_close" opacity="0"></div></div><div id="MB_content">';
+	            lstHtml = lstHtml + '<div align="center" class="tit_negro">';
+	            lstHtml = lstHtml + '¿Desear continuar en la página?<br /><br />';
+	            lstHtml = lstHtml + '<input size="1" type="text" id="tfContador" name="tfContador" style="cursor: none;border: none;PADDING-RIGHT: 0.5em; PADDING-LEFT: 0.5em; FONT-WEIGHT: bold; FONT-SIZE: small; PADDING-BOTTOM: 0.5em; VERTICAL-ALIGN: top; COLOR: #00319c; PADDING-TOP: 0.5em; BACKGROUND-COLOR: #EFEFEF;" /><br /><br />';
+	            lstHtml = lstHtml + '<input type="Button" value="Si" class="frm_bot_azclaro" onclick="javascript:continuaSesion();"/>';
+	            lstHtml = lstHtml + '&nbsp;&nbsp;&nbsp;';
+	            lstHtml = lstHtml + '<input type="Button" value="No" class="frm_bot_azclaro" onclick="javascript:cierraSesion();" />';
+	            lstHtml = lstHtml + '</div></div></div></center>';
+	            lstHtml = lstHtml + '<div opacity="0" id="MB_overlay"></div>';
+	
+	            document.getElementById('msjSesion').innerHTML = lstHtml;
+	            id_time15 = setInterval('cambio()', 1000);
+	        }
+	        else
+	        {
+	        	lnuCountPressKey = 0;
+	        	resetCount();
+	            resetSesion();
+	            id_timeSesion = setInterval('fMuestraModalBox()', lnuTimeLayerShowQuestion);
+	            var iframe = document.getElementById("refreshIframe");
+				iframe.src = "/shell/af/core/session/UpdateSesionUser.do";
+	        }
+ }
+function cambio() {
+    if (intCont == 0) {
+        document.getElementById('msjSesion').innerHTML = '';
+        resetCount();
+        resetSesion();
+        fSession('Exit');
+    } else {
+        var lboTfContador = document.getElementById('tfContador');
+        if (lboTfContador != null) {
+            lboTfContador.value = intCont;
+            lboTfContador.blur();
+            intCont = intCont - 1;
+        }
+    }
+}
+function continuaSesion() {
+            document.getElementById('msjSesion').innerHTML = '';
+            resetCount();
+            resetSesion();
+            id_timeSesion = setInterval('fMuestraModalBox()', lnuTimeLayerShowQuestion);
+            var iframe = document.getElementById("refreshIframe");
+			iframe.src = "/shell/af/core/session/UpdateSesionUser.do";
+}
+
+function cierraSesion() {
+    document.getElementById('msjSesion').innerHTML = '';
+    resetCount();
+    resetSesion();
+    fSession('Exit_Home');
+}
+
+function resetCount() {
+    clearInterval(id_time15);
+    intCont = 30;
+}
+
+function resetSesion() {
+    clearInterval(id_timeSesion);
+}
+
+function fSession(pstAccion) {
+    if (pstAccion == "Exit") {
+    	clearInterval(id_timeSesion);
+    	window.location="/shell/af/core/visitor/logout.do?user=" + lstUser + "&registrado=" + lstUserReg + "&systemOutSession=SI";
+    	//window.location="/shell/af/FinalizaSesionTiendaTelmex.do?user=" + lstUser + "&registrado=" + lstUserReg;
+    }
+    if (pstAccion == "Exit_Home") {
+    	clearInterval(id_timeSesion);
+    	window.location="/shell/af/core/visitor/logout.do";
+    }
+}
+
+function addToCart(forma) {
+  	//alert("AGREGANDO A CARRITO.....");
+  	scrollTo(0,0);
+  	//var forma = document.forms[formName];
+  	myAjax=new ajax();
+    p=new panelRefresher();
+	myAjax.init();
+	//alert("INICIANDO AJAX BICLORO.....");
+	//alert("forma.contentId.value: " + forma.contentId.value);
+	myAjax.request("/shell/af/page/commerce/shopping/ajaxCart.do?oid=" + forma.contentId.value,p);
+	/*
+	var valorTipoRegion = document.getElementById("tipoRegion");
+	if( valorTipoRegion == null ){
+		myAjax.request("/shell/af/page/commerce/shopping/ajaxCart.do?oid=" + forma.contentId.value,p);
+	}else{
+		var lstUrlAjaxBicloro = "/shell/af/page/commerce/shopping/ajaxCart.do?oid=" + forma.contentId.value;
+		    lstUrlAjaxBicloro = lstUrlAjaxBicloro + "&tipoRegion=" + forma.tipoRegion.value;
+		    lstUrlAjaxBicloro = lstUrlAjaxBicloro + "&idRegionTelcel=" + forma.idRegionTelcel.value;
+		    lstUrlAjaxBicloro = lstUrlAjaxBicloro + "&idCiudadTelcel=" + forma.idCiudadTelcel.value;
+		    lstUrlAjaxBicloro = lstUrlAjaxBicloro + "&ciudadTelcel=" + forma.ciudadTelcel.value;
+		    lstUrlAjaxBicloro = lstUrlAjaxBicloro + "&cpCiudadTelcel=" + forma.cpCiudadTelcel.value;
+		myAjax.request(lstUrlAjaxBicloro,p);
+	}
+	*/
+}
+/*
+function addToCart(forma, isJQ, pstOid) {
+  	scrollTo(0,0);
+  	//var forma = document.forms[formName];
+  	myAjax=new ajax();
+    p=new panelRefresher();
+	myAjax.init();
+	var lstOid = "0";	
+	if(isJQ){
+		lstOid = pstOid;
+	}else{
+		lstOid = forma.contentId.value;
+	}
+	myAjax.request("/shell/af/page/commerce/shopping/ajaxCart.do?oid=" + lstOid,p);
+}*/
+
+var id_timeSessionOff = setTimeout("manejarSesion();", lnuTimeSessionOff);
+
+
+		function createCookieForAkamai(){
+			
+			var date = new Date();
+			date.setTime(date.getTime()+(1*24*60*60*1000));
+			var expires = "; expires="+date.toGMTString();
+			//document.cookie = "login=0" + expires + "; path=/; domain=.telmex.com";
+			document.cookie = "login=0" + expires + "; path=/";
+			//document.cookie = lstCookieNameVal+expires+"; path=/";
+			
+		}
+	
+createCookieForAkamai();
+</script>
+
+
+		</div>
+	
+
+<div id="body" align="center">
+  
+
+
+
+
+<script src="/shell/xflow/kukini-commerce/docroot/js/jquery-1.11.1.min.js"> </script>
+<script src="/shell/xflow/kukini-commerce/docroot/js/jquery-ui-1.10.4.custom.min.js"> </script>
+<link rel="stylesheet" href="/shell/xflow/kukini-commerce/docroot/core/css/jquery-ui-1.10.4.custom.css">
+<script src="/shell/xflow/kukini-commerce/docroot/js/jquery_placeholder.js"> </script>
+<script src="/shell/xflow/kukini-commerce/docroot/js/html5Inputs.js"> </script>
+<script src="/shell/xflow/kukini-commerce/docroot/js/jquery.blockUI.js"> </script>
+
+<!-- BEGIN core/home/home.xform -->
+
+<script type="text/javascript">
+  function addCartItem(contentId, contentTypeId, quantity) {
+    var formName = "addCartItemForm";
+    var form = document.forms[formName];
+    if (contentTypeId == "") contentTypeId = 0;
+    form.contentId.value = contentId;
+    form.contentTypeId.value = contentTypeId;
+    form.quantity.value = quantity;
+    form.submit();
+  }
+  
+  function oneClickCheckout(contentId, contentTypeId, quantity) {
+    var formName = "oneClickCheckoutForm";
+    var form = document.forms[formName];
+    if (contentTypeId == "") contentTypeId = 0;
+    form.contentId.value = contentId;
+    form.contentTypeId.value = contentTypeId;
+    form.quantity.value = quantity;
+    form.submit();
+  }
+
+<!-- Start of DoubleClick Spotlight Tag: Please do not remove-->
+<!-- Activity Name for this tag is:Home page (el mismo para todos los productos) -->
+<!-- Web site URL where tag should be placed: https://www.tienda.telmex.com/shell/af/home.do -->
+<!-- This tag must be placed within the opening <body> tag, as close to the beginning of it as possible-->
+<!-- Creation Date:7/28/2010 -->
+var axel = Math.random()+ "";
+var a = axel * 10000000000000;
+var lstLabelImage = "<IMG SRC=\"https://ad.doubleclick.net/activity;src=1002597;type=venta775;cat=homep033;ord=" + a + "?\" WIDTH=\"1\" HEIGHT=\"1\" BORDER=\"0\" />";
+document.write(lstLabelImage);
+<!-- End of DoubleClick Spotlight Tag: Please do not remove-->
+
+</script><img src="https://ad.doubleclick.net/activity;src=1002597;type=venta775;cat=homep033;ord=7521608675290.803?" width="1" height="1" border="0">
+
+<noscript>
+
+</noscript>
+
+<div>
+
+
+
+<div class="col1">
+  <div id="zone0" align="left">
+    <!-- Display program that has been mapped, in the BVMC, to the channel's zone0 div -->
+    <!-- BEGIN divMappingProgram_-8327_zone0 -->
+   
+
+
+
+
+ 
+ 
+ 
+ 
+ 
+ 
+ <div class="div-basemenu">
+ <div class="centrado2">
+   <div class="div-menu" style="width: 1050px;">
+        <ul class="menu" style="width: 1050px;">
+        	
+        		
+        		
+		        <li class="btn">
+		        	
+							
+									<a href="/shell/af/consultaProductosComputo.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?referencia=-8957">Cómputo y Tablets</a>
+								
+						
+	            	<ul>
+	         			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9496&amp;contentTypeId=0&amp;selectedChannels=-8957">Tablets</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-8987&amp;contentTypeId=0&amp;selectedChannels=-8957">Portátiles</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-8988&amp;contentTypeId=0&amp;selectedChannels=-8957">Escritorio</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-10052&amp;contentTypeId=0&amp;selectedChannels=-8957">Gaming</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9216&amp;contentTypeId=0&amp;selectedChannels=-8957">Multifuncionales</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9316&amp;contentTypeId=0&amp;selectedChannels=-8957">Conectividad WiFi</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9416&amp;contentTypeId=0&amp;selectedChannels=-8957">Software</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/content/EquipamientoPYME.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375">Negocio</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         							
+	         					
+			   			
+		     		</ul>
+			    </li>
+			 
+        		
+        		
+		        <li class="btn">
+		        	
+							
+									<a href="/shell/af/consultaProductosComputo.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?referencia=-9918">Pantallas</a>
+								
+						
+	            	<ul>
+	         			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9436&amp;contentTypeId=0&amp;selectedChannels=-9918">HD - FHD</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9836&amp;contentTypeId=0&amp;selectedChannels=-9918">4K - UHD</a></li>
+	         					
+			   			
+		     		</ul>
+			    </li>
+			 
+        		
+        		
+		        <li class="btn">
+		        	
+							
+									<a href="/shell/af/consultaProductosComputo.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?referencia=-8976">Teléfonos</a>
+								
+						
+	            	<ul>
+	         			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9536&amp;contentTypeId=0&amp;selectedChannels=-8976">Celulares</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9876&amp;contentTypeId=0&amp;selectedChannels=-8976">Phablets</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-8977&amp;contentTypeId=0&amp;selectedChannels=-8976">Alámbricos</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9667&amp;contentTypeId=0&amp;selectedChannels=-8976">Inalámbricos</a></li>
+	         							
+	         					
+			   			
+	         				
+	         						
+	         								<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9376&amp;contentTypeId=0&amp;selectedChannels=-8976">Equipos Multilínea</a></li>
+	         							
+	         					
+			   			
+		     		</ul>
+			    </li>
+			 
+        		
+        		
+		        <li class="btn">
+		        	
+							
+									<a href="/shell/af/consultaProductosComputo.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?referencia=-9656">Entretenimiento</a>
+								
+						
+	            	<ul>
+	         			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9456&amp;contentTypeId=0&amp;selectedChannels=-9656">Consolas</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9297&amp;contentTypeId=0&amp;selectedChannels=-9656">Videojuegos</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9336&amp;contentTypeId=0&amp;selectedChannels=-9656">Sistemas de Audio</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-10071&amp;contentTypeId=0&amp;selectedChannels=-9656">Bocinas</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-10072&amp;contentTypeId=0&amp;selectedChannels=-9656">GoPro</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9932&amp;contentTypeId=0&amp;selectedChannels=-9656">Drones</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9476&amp;contentTypeId=0&amp;selectedChannels=-9656">Libros de México</a></li>
+	         					
+			   			
+		     		</ul>
+			    </li>
+			 
+        		
+        		
+		        <li class="btn">
+		        	
+							
+									<a href="/shell/af/consultaProductosComputo.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?referencia=-9776">Hogar</a>
+								
+						
+	            	<ul>
+	         			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9922&amp;contentTypeId=0&amp;selectedChannels=-9776">Estufas</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9921&amp;contentTypeId=0&amp;selectedChannels=-9776">Refrigeradores</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9923&amp;contentTypeId=0&amp;selectedChannels=-9776">Lavadoras</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-10044&amp;contentTypeId=0&amp;selectedChannels=-9776">Monitores de Bebé</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-10043&amp;contentTypeId=0&amp;selectedChannels=-9776">Aparatos de Salud</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9931&amp;contentTypeId=0&amp;selectedChannels=-9776">Deportes</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-10045&amp;contentTypeId=0&amp;selectedChannels=-9776">Electrodomésticos</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-10046&amp;contentTypeId=0&amp;selectedChannels=-9776">Aires Acondicionados</a></li>
+	         					
+			   			
+		     		</ul>
+			    </li>
+			 
+        		
+        		
+		        <li class="btn">
+		        	
+							
+									<a href="/shell/af/consultaProductosComputo.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?referencia=-9659">Accesorios</a>
+								
+						
+	            	<ul>
+	         			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9296&amp;contentTypeId=0&amp;selectedChannels=-9659">Baterías Portátiles</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-10036&amp;contentTypeId=0&amp;selectedChannels=-9659">Logitech</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9937&amp;contentTypeId=0&amp;selectedChannels=-9659">Reguladores</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9934&amp;contentTypeId=0&amp;selectedChannels=-9659">Xbox</a></li>
+	         					
+			   			
+		     		</ul>
+			    </li>
+			 
+        		
+        		
+		        <li class="btn">
+		        	
+							
+									<a href="/shell/af/productosApple.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375">Apple</a>
+								
+						
+	            	<ul>
+	         			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9816&amp;contentTypeId=0&amp;selectedChannels=-9916">iPad</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9919&amp;contentTypeId=0&amp;selectedChannels=-9916">iPhone</a></li>
+	         					
+			   			
+	         				
+	         						<li><a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9935&amp;contentTypeId=0&amp;selectedChannels=-9916">Accesorios</a></li>
+	         					
+			   			
+		     		</ul>
+			    </li>
+			 
+        		
+        		
+		        <li class="btn">
+		        	
+							
+									<a href="/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9930&amp;contentTypeId=0&amp;selectedChannels=-9926">Motocicletas</a>
+								
+						
+	            	<ul>
+	         			
+	         				
+	         					
+			   			
+		     		</ul>
+			    </li>
+			 
+        		
+        		
+		        <li class="btn">
+		        	
+							
+									<a href="/shell/af/core/content/EquipamientoPYME.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375">Negocio</a>
+								
+						
+	            	<ul>
+	         			
+		     		</ul>
+			    </li>
+			 
+        		
+        		
+		        <li class="btn">
+		        	
+							
+									</li><li style="background-color: #ed1c24; line-height:40px;"><a href="/shell/af/ventaEspecial.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-10096"><strong>WOW</strong></a></li>
+								
+						
+	            	<ul>
+	         			
+		     		</ul>
+			    
+			 
+			
+		</ul>
+	</div>
+	
+   </div>
+</div>
+
+
+<!-- END divMappingProgram_-8327_zone0 -->
+
+  </div>   
+ </div>
+
+
+<div class="col2">
+  <div id="zone2">
+    <!-- Display program that has been mapped, in the BVMC, to the channel's zone2 div -->
+    
+    
+<script type="text/javascript">
+  function switchPage(formName, event) {
+    var form = document.forms[formName];
+    form.event.value = event;
+    form.submit();
+  }
+</script>
+
+		<script type="text/javascript" src="/shell/xflow/kukini-commerce/docroot/core/html/js/sliderman.1.3.0.js"> </script>
+		<link rel="stylesheet" type="text/css" href="/shell/xflow/kukini-commerce/docroot/core/html/css/sliderman.css">
+	
+
+
+
+
+
+
+<style>
+#contenedor {
+/*border: thick solid #000;*/
+overflow: hidden;
+width: 100%;
+}
+</style>
+
+
+<div id="contenedor">
+    
+     
+     
+     <div id="wrapper">
+		<div id="examples_outer">
+			<div id="slider_container_2">
+			<div id="apDiv3">	
+  				<div class="c">
+				<div id="SliderNameNavigation_2">
+				<div class="c">
+				</div>         
+		    <a href="javascript:void(0);" id="SliderName_2_SliderNavigation0" class="active"><img src="/shell/xflow/kukini-commerce/docroot/core/html/images/clear.gif"></a><a href="javascript:void(0);" id="SliderName_2_SliderNavigation1" class=""><img src="/shell/xflow/kukini-commerce/docroot/core/html/images/clear.gif"></a><a href="javascript:void(0);" id="SliderName_2_SliderNavigation2" class=""><img src="/shell/xflow/kukini-commerce/docroot/core/html/images/clear.gif"></a><a href="javascript:void(0);" id="SliderName_2_SliderNavigation3" class=""><img src="/shell/xflow/kukini-commerce/docroot/core/html/images/clear.gif"></a></div>
+			  <div id="SliderName_2" class="SliderName_2"><map name="img1map"><area href="#img1map-area1" shape="rect" coords="0,40,30,200" alt=""><area href="#img1map-area2" shape="rect" coords="596,30,556,200" alt=""></map><a href="javascript:redirect('LOCAL', 0);" onmouseover="window.status='reguladores_agosto'; return true;" onmouseout="window.status='';" style="display: none;"><img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/banners/980x310_agosto_home_modem.jpg" width="960" height="330" title="reguladores_agosto" alt=""></a><a href="javascript:redirect('LOCAL', 1);" onmouseover="window.status='galaxy_1050331_ago'; return true;" onmouseout="window.status='';" style="display: none;"><img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/banners/980x310_agosto_home_galaxytab.jpg" width="960" height="330" title="galaxy_1050331_ago" alt=""></a><a href="javascript:redirect('LOCAL', 2);" onmouseover="window.status='hp_1050276_ago'; return true;" onmouseout="window.status='';" style="display: none;"><img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/banners/980x310_agosto_home_laptop.jpg" width="960" height="330" title="hp_1050276_ago" alt=""></a><a href="javascript:redirect('LOCAL', 3);" onmouseover="window.status='gaming_ago'; return true;" onmouseout="window.status='';" style="display: none;"><img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/banners/980x310_agosto_home_gaming.jpg" width="960" height="330" title="gaming_ago" alt=""></a><div style="width: 960px; height: 330px; position: relative;"><div style="width: 960px; height: 330px; position: absolute; top: 0px; left: 0px; display: block;"><div style="width: 960px; height: 330px; position: absolute; top: 0px; left: 0px; overflow: hidden;"><img src="https://tienda.telmex.com/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/banners/980x310_agosto_home_modem.jpg" style="top: 0px; left: 0px; opacity: 1; width: 960px; height: 330px; overflow: hidden; clip: rect(0px, 960px, 330px, 0px); position: absolute;"></div></div><div style="width: 960px; height: 330px; position: absolute; top: 0px; left: 0px; display: block;"><a href="javascript:redirect('LOCAL', 0);" target="" style="width: 960px; height: 330px; position: absolute; top: 0px; left: 0px; display: block; opacity: 0; background: rgb(0, 0, 0);"></a></div><div style="display: none;"><div style="width: 960px; height: 330px; position: absolute; top: 0px; left: 0px; display: block; background: rgb(255, 255, 255); opacity: 0.5;"></div><div style="width: 960px; height: 330px; position: absolute; top: 0px; left: 0px; display: block; background: url(&quot;/shell/xflow/kukini-commerce/docroot/core/html/images/loading.gif&quot;) center center no-repeat;"></div></div><div style="visibility: hidden;"><div style="position: absolute; overflow: hidden; text-align: left; background: rgb(255, 255, 255); opacity: 0.4; width: 960px; height: 50px; bottom: 0px; left: 0px;"></div><div style="position: absolute; overflow: hidden; text-align: left; opacity: 1; width: 960px; height: 50px; bottom: 0px; left: 0px;"></div></div><div style="display: none;"><a href="javascript:void(0);" class="SliderNamePrev_2" style="opacity: 1;"></a><a href="javascript:void(0);" class="SliderNameNext_2" style="opacity: 1;"></a></div></div></div> 
+	       </div>
+	    </div>
+    </div>
+    
+    
+
+</div>
+<div id="contenedor2">
+    <div class="wrap_sub_banners">
+    	
+    	
+    	<div class="div_ban_top2 margin_banner_top">
+    		
+    			
+		    			
+					   			
+					   					<div class="box_sub_banner"><a title="" href="https://tienda.telmex.com/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=-8957&amp;contentTypeId=0&amp;contentId=26147"><img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/banners/250x250_mesh_agosto.jpg" height="250" width="250"></a></div>
+					   							   				
+					   		
+		   			
+			
+    			
+		    			
+					   			
+					   					<div class="box_sub_banner"><a title="" href="https://tienda.telmex.com/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=-9776&amp;contentTypeId=0&amp;contentId=22509"><img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/banners/250x250_monitor_agosto.jpg" height="250" width="250"></a></div>
+					   							   				
+					   		
+		   			
+			
+    			
+		    			
+					   			
+					   					<div class="box_sub_banner2"><a title="" href="https://tienda.telmex.com/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-9923&amp;contentTypeId=0&amp;selectedChannels=-9776"><img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/banners/250x440_agosto_lavadoras.jpg" height="250" width="440"></a></div>
+					   							   				
+					   		
+		   			
+			
+    			
+		    			
+					   			
+					   					<div class="box_sub_banner_large"><a title="" href="https://tienda.telmex.com/shell/af/core/nav/categoryBrowse.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?categoryId=-10046&amp;contentTypeId=0&amp;selectedChannels=-9776"><img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/banners/960x200_aireacondicionado.jpg" height="200" width="960"></a></div>
+					   							   				
+					   		
+		   			
+							
+    	</div>
+    	
+    </div>
+
+
+<div class="titulo_home">
+		
+ 				<span class="tit_azul_home">Especial de la semana</span>
+ 			
+</div>
+
+       <div class="div_prod-home"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=24871" onmouseover="window.status='Laptop Lenovo 330S CI3 4GB/16GB Optane/1TB'; return true" onmouseout="window.status=''">
+       <div style="position: relative; width: 239px; height: 185px;">
+       <img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/239x185_1048834.jpg" width="239" height="185" style="position:absolute; top:0px; left:0px;">
+     	
+    			<img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/etiquetas/12msi_dic2018.png" width="239" height="185" border="0" style="position:absolute; top:0px; left:0px;">
+			
+		</div>
+       </a>
+       		<div class="div_desc-home"><span class="txt_nombreprod"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=24871" onmouseover="window.status='Laptop Lenovo 330S CI3 4GB/16GB Optane/1TB'; return true" onmouseout="window.status=''">Laptop Lenovo 330S CI3 4GB/16GB Optane/1TB</a></span> <br>
+         		
+         				<span class="txt_descprod">Lt 330S-15IKB</span> <br>
+         			
+         		
+         		
+         		
+         		
+         				
+	    		          		   <span class="txt_desde_azul">Desde </span><span class="txt_precio_azul">$699</span><span class="txt_desde_azul"> al mes</span><br>
+	    		          		   
+	    		          		   
+         					
+         			
+			</div>
+			
+ 	    </div>
+
+       <div class="div_prod-home"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=25201" onmouseover="window.status='Motorola LTE XT1926-6 G6+ Azul Nimbus'; return true" onmouseout="window.status=''">
+       <div style="position: relative; width: 239px; height: 185px;">
+       <img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/1049285_239x185.jpg" width="239" height="185" style="position:absolute; top:0px; left:0px;">
+     	
+    			<img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/etiquetas/precioespecial_dic2018.png" width="239" height="185" border="0" style="position:absolute; top:0px; left:0px;">
+			
+		</div>
+       </a>
+       		<div class="div_desc-home"><span class="txt_nombreprod"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=25201" onmouseover="window.status='Motorola LTE XT1926-6 G6+ Azul Nimbus'; return true" onmouseout="window.status=''">Motorola LTE XT1926-6 G6+ Azul Nimbus</a></span> <br>
+         		
+         				<span class="txt_descprod">XT1926-6 G6+</span> <br>
+         			
+         		
+         		
+         		
+         		
+         				
+	    		          		   <span class="txt_desde_azul">Desde </span><span class="txt_precio_azul">$461</span><span class="txt_desde_azul"> al mes</span><br>
+	    		          		   
+	    		          		   
+							  					
+				         								
+										       					<span class="txt_prectachado">$7,579</span>
+									        					<span class="txt_prec-amarillo">$5,999</span><br>
+										       				
+									        		
+							        		
+         					
+         			
+			</div>
+			
+ 	    </div>
+
+       <div class="div_prod-home"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=26147" onmouseover="window.status='Mesh OMNI AC1200'; return true" onmouseout="window.status=''">
+       <div style="position: relative; width: 239px; height: 185px;">
+       <img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/1049809_239X185.jpg" width="239" height="185" style="position:absolute; top:0px; left:0px;">
+     	
+    			<img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/etiquetas/nuevo_dic2018.png" width="239" height="185" border="0" style="position:absolute; top:0px; left:0px;">
+			
+		</div>
+       </a>
+       		<div class="div_desc-home"><span class="txt_nombreprod"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=26147" onmouseover="window.status='Mesh OMNI AC1200'; return true" onmouseout="window.status=''">Mesh OMNI AC1200</a></span> <br>
+         		
+         				<span class="txt_descprod">OMNI</span> <br>
+         			
+         		
+         		
+         		
+         		
+         				
+	    		          		   <span class="txt_desde_azul">Desde </span><span class="txt_precio_azul">$308</span><span class="txt_desde_azul"> al mes</span><br>
+	    		          		   
+	    		          		   
+         					
+         			
+			</div>
+			
+ 	    </div>
+
+       <div class="div_prod-home"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=25853" onmouseover="window.status='Pantalla Samsung 65&quot; 4K Smart TV'; return true" onmouseout="window.status=''">
+       <div style="position: relative; width: 239px; height: 185px;">
+       <img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/1049869_239x185.jpg" width="239" height="185" style="position:absolute; top:0px; left:0px;">
+     	
+    			<img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/etiquetas/18msi_dic2018.png" width="239" height="185" border="0" style="position:absolute; top:0px; left:0px;">
+			
+		</div>
+       </a>
+       		<div class="div_desc-home"><span class="txt_nombreprod"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=25853" onmouseover="window.status='Pantalla Samsung 65&quot; 4K Smart TV'; return true" onmouseout="window.status=''">Pantalla Samsung 65" 4K Smart TV</a></span> <br>
+         		
+         				<span class="txt_descprod">UN65RU7100FXZX</span> <br>
+         			
+         		
+         		
+         		
+         		
+         				
+	    		          		   <span class="txt_desde_azul">Desde </span><span class="txt_precio_azul">$1,733</span><span class="txt_desde_azul"> al mes</span><br>
+	    		          		   
+	    		          		   
+							  					
+				         								
+										       					<span class="txt_prectachado">$32,499</span>
+									        					<span class="txt_prec-amarillo">$31,189</span><br>
+										       				
+									        		
+							        		
+         					
+         			
+			</div>
+			
+ 	    </div>
+
+       <div class="div_prod-home"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=25813" onmouseover="window.status='Motorola LTE XT1955-2 G7 Power Azul'; return true" onmouseout="window.status=''">
+       <div style="position: relative; width: 239px; height: 185px;">
+       <img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/1049971_239x185.jpg" width="239" height="185" style="position:absolute; top:0px; left:0px;">
+     	
+    			<img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/etiquetas/precioespecial_dic2018.png" width="239" height="185" border="0" style="position:absolute; top:0px; left:0px;">
+			
+		</div>
+       </a>
+       		<div class="div_desc-home"><span class="txt_nombreprod"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=25813" onmouseover="window.status='Motorola LTE XT1955-2 G7 Power Azul'; return true" onmouseout="window.status=''">Motorola LTE XT1955-2 G7 Power Azul</a></span> <br>
+         		
+         				<span class="txt_descprod">G7</span> <br>
+         			
+         		
+         		
+         		
+         		
+         				
+	    		          		   <span class="txt_desde_azul">Desde </span><span class="txt_precio_azul">$382</span><span class="txt_desde_azul"> al mes</span><br>
+	    		          		   
+	    		          		   
+							  					
+				         								
+										       					<span class="txt_prectachado">$5,869</span>
+									        					<span class="txt_prec-amarillo">$4,999</span><br>
+										       				
+									        		
+							        		
+         					
+         			
+			</div>
+			
+ 	    </div>
+
+       <div class="div_prod-home"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=26146" onmouseover="window.status='Consola Xbox One S 1TB Fortnite Edición Especial'; return true" onmouseout="window.status=''">
+       <div style="position: relative; width: 239px; height: 185px;">
+       <img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/1050293_239x185.jpg" width="239" height="185" style="position:absolute; top:0px; left:0px;">
+     	
+    			<img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/etiquetas/13msi_dic2018.png" width="239" height="185" border="0" style="position:absolute; top:0px; left:0px;">
+			
+		</div>
+       </a>
+       		<div class="div_desc-home"><span class="txt_nombreprod"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=26146" onmouseover="window.status='Consola Xbox One S 1TB Fortnite Edición Especial'; return true" onmouseout="window.status=''">Consola Xbox One S 1TB Fortnite Edición Especial</a></span> <br>
+         		
+         				<span class="txt_descprod">23C-00084</span> <br>
+         			
+         		
+         		
+         		
+         		
+         				
+	    		          		   <span class="txt_desde_azul">Desde </span><span class="txt_precio_azul">$622</span><span class="txt_desde_azul"> al mes</span><br>
+	    		          		   
+	    		          		   
+         					
+         			
+			</div>
+			
+ 	    </div>
+
+       <div class="div_prod-home"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=22326" onmouseover="window.status='All in One Lenovo 510-22 A6 4 GB/1 TB 21.5&quot;'; return true" onmouseout="window.status=''">
+       <div style="position: relative; width: 239px; height: 185px;">
+       <img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/239x185_1046196-.jpg" width="239" height="185" style="position:absolute; top:0px; left:0px;">
+     	
+    			<img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/etiquetas/12msi_dic2018.png" width="239" height="185" border="0" style="position:absolute; top:0px; left:0px;">
+			
+		</div>
+       </a>
+       		<div class="div_desc-home"><span class="txt_nombreprod"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=22326" onmouseover="window.status='All in One Lenovo 510-22 A6 4 GB/1 TB 21.5&quot;'; return true" onmouseout="window.status=''">All in One Lenovo 510-22 A6 4 GB/1 TB 21.5"</a></span> <br>
+         		
+         				<span class="txt_descprod">AIO 510-22ASR</span> <br>
+         			
+         		
+         		
+         		
+         		
+         				
+	    		          		   <span class="txt_desde_azul">Desde </span><span class="txt_precio_azul">$616</span><span class="txt_desde_azul"> al mes</span><br>
+	    		          		   
+	    		          		   
+         					
+         			
+			</div>
+			
+ 	    </div>
+
+       <div class="div_prod-home"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=25728" onmouseover="window.status='Huawei LTE POT-LX3 P Smart 2019 Azul'; return true" onmouseout="window.status=''">
+       <div style="position: relative; width: 239px; height: 185px;">
+       <img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/1049762_239x185.jpg" width="239" height="185" style="position:absolute; top:0px; left:0px;">
+     	
+    			<img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/etiquetas/precioespecial_dic2018.png" width="239" height="185" border="0" style="position:absolute; top:0px; left:0px;">
+			
+		</div>
+       </a>
+       		<div class="div_desc-home"><span class="txt_nombreprod"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=25728" onmouseover="window.status='Huawei LTE POT-LX3 P Smart 2019 Azul'; return true" onmouseout="window.status=''">Huawei LTE POT-LX3 P Smart 2019 Azul</a></span> <br>
+         		
+         				<span class="txt_descprod">P Smart 2019</span> <br>
+         			
+         		
+         		
+         		
+         		
+         				
+	    		          		   <span class="txt_desde_azul">Desde </span><span class="txt_precio_azul">$345</span><span class="txt_desde_azul"> al mes</span><br>
+	    		          		   
+	    		          		   
+							  					
+				         								
+										       					<span class="txt_prectachado">$4,899</span>
+									        					<span class="txt_prec-amarillo">$4,499</span><br>
+										       				
+									        		
+							        		
+         					
+         			
+			</div>
+			
+ 	    </div>
+
+       <div class="div_prod-home"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=25854" onmouseover="window.status='Pantalla Samsung 58&quot; 4K Smart TV'; return true" onmouseout="window.status=''">
+       <div style="position: relative; width: 239px; height: 185px;">
+       <img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/1049870_239x185.jpg" width="239" height="185" style="position:absolute; top:0px; left:0px;">
+     	
+    			<img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/etiquetas/18msi_dic2018.png" width="239" height="185" border="0" style="position:absolute; top:0px; left:0px;">
+			
+		</div>
+       </a>
+       		<div class="div_desc-home"><span class="txt_nombreprod"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=25854" onmouseover="window.status='Pantalla Samsung 58&quot; 4K Smart TV'; return true" onmouseout="window.status=''">Pantalla Samsung 58" 4K Smart TV</a></span> <br>
+         		
+         				<span class="txt_descprod">UN58RU7100FXZX</span> <br>
+         			
+         		
+         		
+         		
+         		
+         				
+	    		          		   <span class="txt_desde_azul">Desde </span><span class="txt_precio_azul">$1,198</span><span class="txt_desde_azul"> al mes</span><br>
+	    		          		   
+	    		          		   
+							  					
+				         								
+										       					<span class="txt_prectachado">$24,374</span>
+									        					<span class="txt_prec-amarillo">$21,559</span><br>
+										       				
+									        		
+							        		
+         					
+         			
+			</div>
+			
+ 	    </div>
+
+       <div class="div_prod-home"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=24669" onmouseover="window.status='Extensor TP-Link WPA8630 AC1350'; return true" onmouseout="window.status=''">
+       <div style="position: relative; width: 239px; height: 185px;">
+       <img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/1047660_239x185.jpg" width="239" height="185" style="position:absolute; top:0px; left:0px;">
+     	
+    			<img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/etiquetas/18msi_dic2018.png" width="239" height="185" border="0" style="position:absolute; top:0px; left:0px;">
+			
+		</div>
+       </a>
+       		<div class="div_desc-home"><span class="txt_nombreprod"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=24669" onmouseover="window.status='Extensor TP-Link WPA8630 AC1350'; return true" onmouseout="window.status=''">Extensor TP-Link WPA8630 AC1350</a></span> <br>
+         		
+         				<span class="txt_descprod">TL-WPA8630</span> <br>
+         			
+         		
+         		
+         		
+         		
+         				
+	    		          		   <span class="txt_desde_azul">Desde </span><span class="txt_precio_azul">$183</span><span class="txt_desde_azul"> al mes</span><br>
+	    		          		   
+	    		          		   
+         					
+         			
+			</div>
+			
+ 	    </div>
+
+       <div class="div_prod-home"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=26087" onmouseover="window.status='Laptop Lenovo 330-14AST AMD A4 4GB/500GB 14'; return true" onmouseout="window.status=''">
+       <div style="position: relative; width: 239px; height: 185px;">
+       <img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/1050261_239X185.jpg" width="239" height="185" style="position:absolute; top:0px; left:0px;">
+     	
+    			<img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/etiquetas/9msi_dic2018.png" width="239" height="185" border="0" style="position:absolute; top:0px; left:0px;">
+			
+		</div>
+       </a>
+       		<div class="div_desc-home"><span class="txt_nombreprod"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=26087" onmouseover="window.status='Laptop Lenovo 330-14AST AMD A4 4GB/500GB 14'; return true" onmouseout="window.status=''">Laptop Lenovo 330-14AST AMD A4 4GB/500GB 14</a></span> <br>
+         		
+         				<span class="txt_descprod">330-14AST</span> <br>
+         			
+         		
+         		
+         		
+         		
+         				
+	    		          		   <span class="txt_desde_azul">Desde </span><span class="txt_precio_azul">$541</span><span class="txt_desde_azul"> al mes</span><br>
+	    		          		   
+	    		          		   
+         					
+         			
+			</div>
+			
+ 	    </div>
+
+       <div class="div_prod-home"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=24948" onmouseover="window.status='Tello'; return true" onmouseout="window.status=''">
+       <div style="position: relative; width: 239px; height: 185px;">
+       <img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/1048769_239x185.jpg" width="239" height="185" style="position:absolute; top:0px; left:0px;">
+     	
+    			<img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/etiquetas/soloenlinea.png" width="239" height="185" border="0" style="position:absolute; top:0px; left:0px;">
+			
+		</div>
+       </a>
+       		<div class="div_desc-home"><span class="txt_nombreprod"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=24948" onmouseover="window.status='Tello'; return true" onmouseout="window.status=''">Tello</a></span> <br>
+         		
+         				<span class="txt_descprod">TLW004</span> <br>
+         			
+         		
+         		
+         		
+         		
+         				
+	    		          		   <span class="txt_desde_azul">Desde </span><span class="txt_precio_azul">$172</span><span class="txt_desde_azul"> al mes</span><br>
+	    		          		   
+	    		          		   
+         					
+         			
+			</div>
+			
+ 	    </div>
+
+       <div class="div_prod-home"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=25730" onmouseover="window.status='Huawei LTE POT-LX3 P Smart 2019 Rojo'; return true" onmouseout="window.status=''">
+       <div style="position: relative; width: 239px; height: 185px;">
+       <img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/1049764_239x185.jpg" width="239" height="185" style="position:absolute; top:0px; left:0px;">
+     	
+    			<img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/etiquetas/precioespecial_dic2018.png" width="239" height="185" border="0" style="position:absolute; top:0px; left:0px;">
+			
+		</div>
+       </a>
+       		<div class="div_desc-home"><span class="txt_nombreprod"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=25730" onmouseover="window.status='Huawei LTE POT-LX3 P Smart 2019 Rojo'; return true" onmouseout="window.status=''">Huawei LTE POT-LX3 P Smart 2019 Rojo</a></span> <br>
+         		
+         				<span class="txt_descprod">P Smart 2019</span> <br>
+         			
+         		
+         		
+         		
+         		
+         				
+	    		          		   <span class="txt_desde_azul">Desde </span><span class="txt_precio_azul">$345</span><span class="txt_desde_azul"> al mes</span><br>
+	    		          		   
+	    		          		   
+							  					
+				         								
+										       					<span class="txt_prectachado">$4,889</span>
+									        					<span class="txt_prec-amarillo">$4,499</span><br>
+										       				
+									        		
+							        		
+         					
+         			
+			</div>
+			
+ 	    </div>
+
+       <div class="div_prod-home"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=24306" onmouseover="window.status='Refrigerador automático 14 pies Blanco Mabe&nbsp;'; return true" onmouseout="window.status=''">
+       <div style="position: relative; width: 239px; height: 185px;">
+       <img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/1047975_239x185.jpg" width="239" height="185" style="position:absolute; top:0px; left:0px;">
+     	
+    			<img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/etiquetas/12msi_dic2018.png" width="239" height="185" border="0" style="position:absolute; top:0px; left:0px;">
+			
+		</div>
+       </a>
+       		<div class="div_desc-home"><span class="txt_nombreprod"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=24306" onmouseover="window.status='Refrigerador automático 14 pies Blanco Mabe&nbsp;'; return true" onmouseout="window.status=''">Refrigerador automático 14 pies Blanco Mabe&nbsp;</a></span> <br>
+         		
+         				<span class="txt_descprod">RME1436XUNB2</span> <br>
+         			
+         		
+         		
+         		
+         		
+         				
+	    		          		   <span class="txt_desde_azul">Desde </span><span class="txt_precio_azul">$586</span><span class="txt_desde_azul"> al mes</span><br>
+	    		          		   
+	    		          		   
+							  					
+				         								
+										       					<span class="txt_prectachado">$11,279</span>
+									        					<span class="txt_prec-amarillo">$8,699</span><br>
+										       				
+									        		
+							        		
+         					
+         			
+			</div>
+			
+ 	    </div>
+
+       <div class="div_prod-home"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=25306" onmouseover="window.status='Consola Xbox One X 1 TB PUBG'; return true" onmouseout="window.status=''">
+       <div style="position: relative; width: 239px; height: 185px;">
+       <img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/1049320_239x185.jpg" width="239" height="185" style="position:absolute; top:0px; left:0px;">
+     	
+    			<img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/etiquetas/13msi_dic2018.png" width="239" height="185" border="0" style="position:absolute; top:0px; left:0px;">
+			
+		</div>
+       </a>
+       		<div class="div_desc-home"><span class="txt_nombreprod"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=25306" onmouseover="window.status='Consola Xbox One X 1 TB PUBG'; return true" onmouseout="window.status=''">Consola Xbox One X 1 TB PUBG</a></span> <br>
+         		
+         		
+         		
+         		
+         		
+         				
+	    		          		   <span class="txt_desde_azul">Desde </span><span class="txt_precio_azul">$704</span><span class="txt_desde_azul"> al mes</span><br>
+	    		          		   
+	    		          		   
+         					
+         			
+			</div>
+			
+ 	    </div>
+
+       <div class="div_prod-home"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=25814" onmouseover="window.status='Motorola LTE XT1965-2 G7 + Deep Indigo'; return true" onmouseout="window.status=''">
+       <div style="position: relative; width: 239px; height: 185px;">
+       <img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/1049972_d5_239x185.jpg" width="239" height="185" style="position:absolute; top:0px; left:0px;">
+     	
+    			<img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/etiquetas/precioespecial_dic2018.png" width="239" height="185" border="0" style="position:absolute; top:0px; left:0px;">
+			
+		</div>
+       </a>
+       		<div class="div_desc-home"><span class="txt_nombreprod"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=25814" onmouseover="window.status='Motorola LTE XT1965-2 G7 + Deep Indigo'; return true" onmouseout="window.status=''">Motorola LTE XT1965-2 G7 + Deep Indigo</a></span> <br>
+         		
+         				<span class="txt_descprod">G7+</span> <br>
+         			
+         		
+         		
+         		
+         		
+         				
+	    		          		   <span class="txt_desde_azul">Desde </span><span class="txt_precio_azul">$507</span><span class="txt_desde_azul"> al mes</span><br>
+	    		          		   
+	    		          		   
+							  					
+				         								
+										       					<span class="txt_prectachado">$7,999</span>
+									        					<span class="txt_prec-amarillo">$6,599</span><br>
+										       				
+									        		
+							        		
+         					
+         			
+			</div>
+			
+ 	    </div>
+
+       <div class="div_prod-home"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=24293" onmouseover="window.status='Estufa de Piso 76 cm Blanca Mabe&nbsp;'; return true" onmouseout="window.status=''">
+       <div style="position: relative; width: 239px; height: 185px;">
+       <img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/1047850_239x185.jpg" width="239" height="185" style="position:absolute; top:0px; left:0px;">
+     	
+    			<img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/etiquetas/12msi_dic2018.png" width="239" height="185" border="0" style="position:absolute; top:0px; left:0px;">
+			
+		</div>
+       </a>
+       		<div class="div_desc-home"><span class="txt_nombreprod"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=24293" onmouseover="window.status='Estufa de Piso 76 cm Blanca Mabe&nbsp;'; return true" onmouseout="window.status=''">Estufa de Piso 76 cm Blanca Mabe&nbsp;</a></span> <br>
+         		
+         				<span class="txt_descprod">EM7630BAPB0</span> <br>
+         			
+         		
+         		
+         		
+         		
+         				
+	    		          		   <span class="txt_desde_azul">Desde </span><span class="txt_precio_azul">$407</span><span class="txt_desde_azul"> al mes</span><br>
+	    		          		   
+	    		          		   
+							  					
+				         								
+										       					<span class="txt_prectachado">$6,829</span>
+									        					<span class="txt_prec-amarillo">$6,039</span><br>
+										       				
+									        		
+							        		
+         					
+         			
+			</div>
+			
+ 	    </div>
+
+       <div class="div_prod-home"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=22509" onmouseover="window.status='Monitor para Bebé con Sonido'; return true" onmouseout="window.status=''">
+       <div style="position: relative; width: 239px; height: 185px;">
+       <img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/239x185_1046408.jpg" width="239" height="185" style="position:absolute; top:0px; left:0px;">
+     	
+    			<img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/etiquetas/6msi_dic2018.png" width="239" height="185" border="0" style="position:absolute; top:0px; left:0px;">
+			
+		</div>
+       </a>
+       		<div class="div_desc-home"><span class="txt_nombreprod"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=22509" onmouseover="window.status='Monitor para Bebé con Sonido'; return true" onmouseout="window.status=''">Monitor para Bebé con Sonido</a></span> <br>
+         		
+         				<span class="txt_descprod">VM100</span> <br>
+         			
+         		
+         		
+         		
+         		
+         				
+	    		          		   <span class="txt_desde_azul">Desde </span><span class="txt_precio_azul">$80</span><span class="txt_desde_azul"> al mes</span><br>
+	    		          		   
+	    		          		   
+							  					
+				         								
+										       					<span class="txt_prectachado">$769</span>
+									        					<span class="txt_prec-amarillo">$654</span><br>
+										       				
+									        		
+							        		
+         					
+         			
+			</div>
+			
+ 	    </div>
+
+       <div class="div_prod-home"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=25858" onmouseover="window.status='Pantalla Samsung 43&quot; 4K Smart TV'; return true" onmouseout="window.status=''">
+       <div style="position: relative; width: 239px; height: 185px;">
+       <img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/1049871_239x185.jpg" width="239" height="185" style="position:absolute; top:0px; left:0px;">
+     	
+    			<img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/etiquetas/15msi_dic2018.png" width="239" height="185" border="0" style="position:absolute; top:0px; left:0px;">
+			
+		</div>
+       </a>
+       		<div class="div_desc-home"><span class="txt_nombreprod"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=25858" onmouseover="window.status='Pantalla Samsung 43&quot; 4K Smart TV'; return true" onmouseout="window.status=''">Pantalla Samsung 43" 4K Smart TV</a></span> <br>
+         		
+         				<span class="txt_descprod">UN43RU7100FXZX</span> <br>
+         			
+         		
+         		
+         		
+         		
+         				
+	    		          		   <span class="txt_desde_azul">Desde </span><span class="txt_precio_azul">$806</span><span class="txt_desde_azul"> al mes</span><br>
+	    		          		   
+	    		          		   
+							  					
+				         								
+										       					<span class="txt_prectachado">$14,374</span>
+									        					<span class="txt_prec-amarillo">$12,689</span><br>
+										       				
+									        		
+							        		
+         					
+         			
+			</div>
+			
+ 	    </div>
+
+       <div class="div_prod-home"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=21700" onmouseover="window.status='Lavadora automática con Tapa Cristal 16 kg Easy Blanco'; return true" onmouseout="window.status=''">
+       <div style="position: relative; width: 239px; height: 185px;">
+       <img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/239x185_1045668.jpg" width="239" height="185" style="position:absolute; top:0px; left:0px;">
+     	
+    			<img src="/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/images/etiquetas/12msi_dic2018.png" width="239" height="185" border="0" style="position:absolute; top:0px; left:0px;">
+			
+		</div>
+       </a>
+       		<div class="div_desc-home"><span class="txt_nombreprod"><a href="/shell/af/core/content/content.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375?selectedChannels=&amp;contentTypeId=0&amp;contentId=21700" onmouseover="window.status='Lavadora automática con Tapa Cristal 16 kg Easy Blanco'; return true" onmouseout="window.status=''">Lavadora automática con Tapa Cristal 16 kg Easy Blanco</a></span> <br>
+         		
+         				<span class="txt_descprod">LEA46102VBAB0</span> <br>
+         			
+         		
+         		
+         		
+         		
+         				
+	    		          		   <span class="txt_desde_azul">Desde </span><span class="txt_precio_azul">$525</span><span class="txt_desde_azul"> al mes</span><br>
+	    		          		   
+	    		          		   
+							  					
+				         								
+										       					<span class="txt_prectachado">$9,139</span>
+									        					<span class="txt_prec-amarillo">$7,789</span><br>
+										       				
+									        		
+							        		
+         					
+         			
+			</div>
+			
+ 	    </div>
+
+       
+ </div>
+
+
+
+
+<script type="text/javascript">
+var gayNombre 		= new Array();
+var gayImages 		= new Array();
+var gayLinks 		= new Array();
+var gayTypeLinks 	= new Array();
+
+
+function redirect(pnuTypeBanner, pnuPosition){
+	//Convirtiendo a String
+    var lstPositionBanner = pnuPosition + "";
+  	if(pnuTypeBanner == 'SIN_LINK'){
+   		return;
+  	}else if(pnuTypeBanner == 'LOCAL'){
+  		dataLayer.push({'event':'addevent','macro-cat':'BannerPrincipal','macro-val':lstPositionBanner});
+  		window.location = gayLinks[pnuPosition];
+  	}else if(pnuTypeBanner == 'EXTERNA'){
+  		dataLayer.push({'event':'addevent','macro-cat':'BannerPrincipal','macro-val':lstPositionBanner});
+  		window.open(gayLinks[pnuPosition]);
+  	}else{
+  		return;
+  	}
+}
+
+function fnCreateBanner(){
+	var divPrincipal 	= document.getElementById('SliderName_2');
+	var lstHtml 		= "";
+	lstHtml 			= lstHtml + "<map name=\"img1map\">";
+	lstHtml 			= lstHtml + "<area href=\"#img1map-area1\" shape=\"rect\" coords=\"0,40,30,200\" alt=\"\" />";
+	lstHtml 			= lstHtml + "<area href=\"#img1map-area2\" shape=\"rect\" coords=\"596,30,556,200\" alt=\"\" />";
+	lstHtml 			= lstHtml + "</map>";
+	for(var lnuCont = 0; lnuCont < gayImages.length; lnuCont++){
+	
+		if(gayTypeLinks[lnuCont] != "SIN_LINK"){
+			lstHtml 		= lstHtml + "<a href=\"javascript:redirect('"+gayTypeLinks[lnuCont]+"', "+lnuCont+");\" onmouseover=\"window.status='"+gayNombre[lnuCont]+"'; return true;\" onmouseout=\"window.status='';\">";
+		}		
+//		lstHtml 		= lstHtml + "<img src=\"/shell/xflow/kukini-commerce/docroot/core/html/images/"+gayImages[lnuCont]+"\" width=\"700\" height=\"200\" title=\""+gayNombre[lnuCont]+"\" alt=\"\" />";
+		lstHtml 		= lstHtml + "<img src=\"/shell/download/fstore/liquidfusion/shell_files/TiendaTelmex/banners/"+gayImages[lnuCont]+"\" width=\"960\" height=\"330\" title=\""+gayNombre[lnuCont]+"\" alt=\"\" />";
+		if(gayTypeLinks[lnuCont] != "SIN_LINK"){
+			lstHtml 		= lstHtml + "</a>";
+			}
+	}
+	divPrincipal.innerHTML 	= lstHtml;
+}
+
+
+  
+
+		
+			gayNombre[parseInt(0.0)] 		= "reguladores_agosto";
+			gayImages[parseInt(0.0)] 		= "980x310_agosto_home_modem.jpg";
+			gayLinks[parseInt(0.0)] 		= "https://tienda.telmex.com/shell/af/core/nav/categoryBrowse.do?categoryId=-9937&contentTypeId=0&selectedChannels=-9659";
+			gayTypeLinks[parseInt(0.0)] 	= "LOCAL";
+		
+			gayNombre[parseInt(1.0)] 		= "galaxy_1050331_ago";
+			gayImages[parseInt(1.0)] 		= "980x310_agosto_home_galaxytab.jpg";
+			gayLinks[parseInt(1.0)] 		= "https://tienda.telmex.com/shell/af/core/content/content.do?selectedChannels=-8957&contentTypeId=0&contentId=26150";
+			gayTypeLinks[parseInt(1.0)] 	= "LOCAL";
+		
+			gayNombre[parseInt(2.0)] 		= "hp_1050276_ago";
+			gayImages[parseInt(2.0)] 		= "980x310_agosto_home_laptop.jpg";
+			gayLinks[parseInt(2.0)] 		= "https://tienda.telmex.com/shell/af/core/content/content.do?selectedChannels=&contentTypeId=0&contentId=26101";
+			gayTypeLinks[parseInt(2.0)] 	= "LOCAL";
+		
+			gayNombre[parseInt(3.0)] 		= "gaming_ago";
+			gayImages[parseInt(3.0)] 		= "980x310_agosto_home_gaming.jpg";
+			gayLinks[parseInt(3.0)] 		= "https://tienda.telmex.com/shell/af/core/nav/categoryBrowse.do?categoryId=-10052&contentTypeId=0&selectedChannels=-8957";
+			gayTypeLinks[parseInt(3.0)] 	= "LOCAL";
+		
+		fnCreateBanner();
+	
+
+
+	var lstPath = "kukini-commerce";
+	var lstImgClear = "/shell/xflow/"+lstPath+"/docroot/core/html/images/clear.gif";
+	var lstImgLoad = "/shell/xflow/"+lstPath+"/docroot/core/html/images/loading.gif";
+
+	effectsDemo2 = 'rain,stairs,fade';
+var demoSlider_2 = Sliderman.slider(
+	{
+		container: 'SliderName_2', width: 960, height: 330, effects: effectsDemo2, display: {
+			autoplay: 14000,
+			loading: {background: '#FFFFFF', opacity: 0.5, image: lstImgLoad},
+			buttons: {
+				hide: true, opacity: 1, 
+					prev: {className: 'SliderNamePrev_2', label: ''}, 
+					next: {className: 'SliderNameNext_2', label: ''}
+			},
+			description: {hide: false, background: '#FFFFFF', opacity: 0.4, height: 50, position: 'bottom'},
+			navigation: {container: 'SliderNameNavigation_2', label: '<img src='+lstImgClear+' />'}
+		}
+	}
+);
+
+	
+
+var gnuPosDivTop 	= 0;
+var gnuPosDivLeft 	= 0;
+var gnuWidthWin 	= 0;
+var gnuHeightWin 	= 0;
+var gnuWidthScreen 	= 0;
+var gnuHeightScreen	= 0;
+
+//Ancho total de la tienda 990
+//Ancho Menu 148
+//Contenido 700
+//Ancho Carrito 140
+//Resolucion 1280 * 1024
+//Posicion 960 - 295
+//Resolucion 1152 * 864
+//Posicion 890 - 295
+//Resolucion 1024 * 768
+//Posicion 835 - 295
+//Resolucion 800 * 600
+//Posicion 825 - 295
+</script>
+
+<!-- <bac>020_PORTAL-TIENDA-TIENDA</bac> -->
+
+  </div>   
+  <div id="zone3">
+    <!-- Display program that has been mapped, in the BVMC, to the channel's zone3 div -->
+    <!-- BEGIN divMappingProgram_-8327_zone3 --><!-- END divMappingProgram_-8327_zone3 -->
+
+  </div>   
+</div>
+
+<div class="col3">  
+  <div id="zone4">
+    <!-- Display program that has been mapped, in the BVMC, to the channel's zone4 div -->   		
+    <!-- BEGIN divMappingProgram_-8327_zone4 --><!-- END divMappingProgram_-8327_zone4 -->
+
+    
+  </div>   
+  <div id="zone5">
+    <!-- Display program that has been mapped, in the BVMC, to the channel's zone5 div -->   		
+    <!-- BEGIN divMappingProgram_-8327_zone5 --><!-- END divMappingProgram_-8327_zone5 -->
+
+  </div>   
+</div>
+</div>
+<!-- END core/home/home.xform -->
+
+<script>
+
+	
+
+
+	
+
+
+<!-- Codigo para efecto de nieve: 5/12/2018 -->
+
+(function($){$.fn.snow=function(options){var $flake=$('<div id="flake" />').css({'position':'absolute','top':'-50px'}).html('&#10052;'),documentHeight=$(document).height(),documentWidth=$(document).width(),defaults={minSize:10,maxSize:20,newOn:500,flakeColor:"#FFFFFF"},options=$.extend({},defaults,options);var interval=setInterval(function(){var startPositionLeft=Math.random()*documentWidth-100,startOpacity=0.5+Math.random(),sizeFlake=options.minSize+Math.random()*options.maxSize,endPositionTop=documentHeight-40,endPositionLeft=startPositionLeft-100+Math.random()*200,durationFall=documentHeight*10+Math.random()*5000;$flake.clone().appendTo('body').css({left:startPositionLeft,opacity:startOpacity,'font-size':sizeFlake,color:options.flakeColor}).animate({top:endPositionTop,left:endPositionLeft,opacity:0.2},durationFall,'linear',function(){$(this).remove()});},options.newOn);};})(jQuery);
+  
+$(document).ready( function(){
+    //jQuery.fn.snow({flakeColor:'#9fdafc'});
+});
+
+
+</script>
+
+
+
+</div>
+
+
+		<div id="footer">
+		  
+
+
+
+
+<!-- BEGIN core/home/footer.xform -->
+<br>
+<table width="100%" border="0" align="center" cellpadding="0" cellspacing="0">
+<tbody><tr>
+	<td>
+		<div class="div-footer">
+		
+				<p><span class="txt_preciocta">Precios exclusivos en línea.</span><br>
+				   <img src="/shell/xflow/kukini-commerce/docroot/core/images/transparent.gif" border="0" width="100%" height="6"><br>
+				   <span class="txt_notasgris">Precios expresados en Moneda Nacional en montos totales.</span>
+				</p>
+			
+				<div class="line-gris"> </div>
+				<span class="txt_notasgris"><a href="/shell/af/soporte.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375" class="lnk_notagris">Asistencia y Soporte</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/shell/af/ConsultaCAT.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375" class="lnk_notagris">Consulta CAT</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="http://www.telmex.com/web/acerca-de-telmex/aviso-de-privacidad" class="lnk_notagris" target="Aviso_Privacidad">Aviso de privacidad</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/shell/af/politicas.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375" class="lnk_notagris">Políticas de Tienda en línea</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/shell/af/garantias.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375" class="lnk_notagris">Garantías</a>&nbsp;&nbsp;|&nbsp;&nbsp;<a href="/shell/af/seguridad.do;jsessionid=386BBC109D2ACB24F6343CDA1BD52E21.node375" class="lnk_notagris">Seguridad</a>&nbsp;&nbsp;|&nbsp;</span><img src="/shell/xflow/kukini-commerce/docroot/core/images/veriSign.gif" width="63" height="39"><br>
+				<img src="/shell/xflow/kukini-commerce/docroot/core/images/transparent.gif" border="0" width="100%" height="6"><br>
+				<span class="txt_nota-azul">© Derechos Reservados, Teléfonos de México S.A.B. de C.V.</span>
+		</div>
+	</td>
+</tr>
+</tbody></table>
+
+
+
+<!-- END core/home/footer.xform -->
+<script type="text/javascript">
+
+		var lstNombreUsr = '';
+		var lstTelefonoUsr = '';
+	
+<!--//
+function fnOpenChat()
+{
+    var UrlChat = "http://chat.clientesweb.net/codechat/ventascode/clientesweb/ventas/default.aspx?department=8361";
+	var myWindow = window.open(UrlChat,"Asistencia","width=371,height=362,resizable=yes,location=no");
+	/*
+	var UrlChat = ""; 
+	if( lstTelefonoUsr != "")
+	{
+		lstNombreUsr = lstNombreUsr.replace(' ',"");
+		if( lstNombreUsr.length > 15 )
+		{
+		    lstNombreUsr = lstNombreUsr.substr(0,15);
+		}
+	    UrlChat = "http://tmkc115.tecmarketing.com/website/paquetes/chatinicioV1.jsp?Nombre=" + lstNombreUsr + "&Telefono=" + lstTelefonoUsr + "&Mensaje=ASESORIA VENTA ONLINE&Pagina=Ventaprodtelmex";
+		var myWindow = window.open(UrlChat,"Asistencia","width=377,height=381");
+	}
+	else
+	{
+		UrlChat = "/shell/xflow/kukini-commerce/docroot/core/html/DatoschatEnLinea.htm";
+		var myWindow = window.open(UrlChat,"Asistencia","width=315,height=230");
+	}*/
+	return;
+}
+-->
+
+</script>
+
+
+		</div>
+	
+
+</div>
+<script type="text/javascript" src="/shell/xflow/kukini-commerce/docroot/commerce/js/tienda-telmex-analytics.js"> </script>
+<script type="text/javascript" src="/shell/xflow/kukini-commerce/docroot/js/JQfunction.js"> </script>
+
+
+	
+
+</div></div><script type="text/javascript" id="">for(var links=document.getElementsByTagName("img"),k=0;k<links.length;k++){var nombre=links[k].getAttribute("src");"/shell/xflow/kukini-commerce/docroot/core/images/barra_carrito_1.gif"==nombre&&dataLayer.push({event:"addpage",pageview:"carrito.html",pagetitle:"Paso Carrito"});"/shell/xflow/kukini-commerce/docroot/core/images/barra_registro_1.gif"==nombre&&dataLayer.push({event:"addpage",pageview:"registro.html",pagetitle:"Paso Registro"});"/shell/xflow/kukini-commerce/docroot/core/images/barra_formas_1.gif"==
+nombre&&dataLayer.push({event:"addpage",pageview:"forma_pago.html",pagetitle:"Paso Forma de Pago"});"/shell/xflow/kukini-commerce/docroot/core/images/barra_datos_1.gif"==nombre&&dataLayer.push({event:"addpage",pageview:"datos_envio.html",pagetitle:"Paso Datos de Envio"});"/shell/xflow/kukini-commerce/docroot/core/images/barra_confirmacion_1.gif"==nombre&&dataLayer.push({event:"addpage",pageview:"confirma.html",pagetitle:"Paso Confirmacion"});"/shell/xflow/kukini-commerce/docroot/core/images/barra_pedido_1.gif"==
+nombre&&dataLayer.push({event:"addpage",pageview:"pedido.html",pagetitle:"Paso Folio"})};</script></body></html>
