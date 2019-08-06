@@ -7,5 +7,5 @@ Feature: Busqueda de Articulo en Tienda Telmex
 
   Scenario: Busqueda articulo en Tienda Telmex
     Given Adrian entro a Tienda Telmex
-    When Adrian busca "Lavadora" y agrega una al carrito de compras
-    Then Adrian valida que el titulo de la ventana contenga la palabra Lavadora
+    When el busca "Lavadora" y agrega una al carrito de compras
+    Then el valida que Tienda Telmex solicite iniciar sesion para comprar

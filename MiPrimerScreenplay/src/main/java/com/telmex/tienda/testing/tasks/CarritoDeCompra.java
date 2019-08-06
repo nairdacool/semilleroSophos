@@ -6,7 +6,7 @@ import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.actions.Click;
 
 import static net.serenitybdd.screenplay.Tasks.instrumented;
-import static com.telmex.tienda.testing.ui.PaginaDeContenido.getAgregarAlCarritoDeCompra;;
+import static com.telmex.tienda.testing.ui.PaginaDeContenido.getAgregarAlCarritoDeCompra;
 
 public class CarritoDeCompra implements Task {
 

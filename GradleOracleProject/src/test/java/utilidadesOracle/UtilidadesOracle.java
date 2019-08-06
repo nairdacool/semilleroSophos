@@ -199,7 +199,10 @@ public class UtilidadesOracle {
 	private static String formatString(String text, Object... variables) {
 		return String.format(text, variables);
 	}
-	
+	/**
+	 * Metodo para 
+	 * @return
+	 */
 	private static Integer getItemsCount(){
 	    try (Connection con = sql2o.open()) {
 	    	int cantidad = con.createQuery(SELECT_CANTIDAD_DE_REGISTROS).executeScalar(Integer.class);

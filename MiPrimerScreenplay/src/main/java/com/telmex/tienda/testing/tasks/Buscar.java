@@ -6,7 +6,7 @@ import net.serenitybdd.screenplay.Task;
 import net.serenitybdd.screenplay.Tasks;
 import net.serenitybdd.screenplay.actions.Enter;
 
-import static com.telmex.tienda.testing.ui.PaginaDeInicio.getCampoDeBusqueda;
+import static com.telmex.tienda.testing.ui.PaginaDeInicioTiendaTelmex.getCampoDeBusqueda;
 
 public class Buscar implements Task {
 	

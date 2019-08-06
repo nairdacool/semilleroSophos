@@ -96,7 +96,7 @@
             <a href="capabilities.html"><i class="fa fa-book"></i> Requirements</a>
         </li>
     </ul>
-    <span class="date-and-time"><a href="build-info.html"><i class="fa fa-info-circle"></i></a> Report generated 04-08-2019 18:10</span>
+    <span class="date-and-time"><a href="build-info.html"><i class="fa fa-info-circle"></i></a> Report generated 06-08-2019 01:03</span>
     <br style="clear:left"/>
 </div>
     <div class="clr"></div>
@@ -148,9 +148,62 @@
 
     <div class="clr"></div>
 
+    <div class="story-title">
+        <h3 class="story-header">Scenario Outline</h3>
+
+        <div class="scenario">Given Adrian entro a la pagina de la Tienda Telmex<br>When el busca los siguientes articulos y agrega una al carrito de compras<br>Then el valida que Tienda Telmex solicite iniciar sesion para comprar</div>
+
+    </div>
 
     <div id="beforetable"></div>
 
+
+        <h3 class="story-header">Examples:&nbsp;</h3>
+
+
+        <p class="example-tag">
+        </p>
+
+        <div class="example-table test-report">
+            <table class="table">
+                <thead>
+                <tr>
+                    <th>#</th>
+                        <th>Articulo</th>
+                        <th>Expected</th>
+                </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="test-SUCCESS"><a href="#0">1</a></td>
+                            <td class="test-SUCCESS"><a
+                                    href="#0">lavadora</a>
+                            </td>
+                            <td class="test-SUCCESS"><a
+                                    href="#0">encontrado</a>
+                            </td>
+                    </tr>
+                    <tr>
+                        <td class="test-SUCCESS"><a href="#1">2</a></td>
+                            <td class="test-SUCCESS"><a
+                                    href="#1">iPhone</a>
+                            </td>
+                            <td class="test-SUCCESS"><a
+                                    href="#1">encontrado</a>
+                            </td>
+                    </tr>
+                    <tr>
+                        <td class="test-SUCCESS"><a href="#2">3</a></td>
+                            <td class="test-SUCCESS"><a
+                                    href="#2">Motocicleta</a>
+                            </td>
+                            <td class="test-SUCCESS"><a
+                                    href="#2">encontrado</a>
+                            </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
     <div id="tablecontents">
         <div>
@@ -183,7 +236,7 @@
                             <a href="javaScript:void(0)" onClick="toggleDiv('stepSection0')"
                                style="display:block;">
                             <span class="top-level-step">
-                                Given Adrian entro a Tienda Telmex
+                                Example #1: {articulo=lavadora, expected=encontrado}
                             </span>
                             </a>
 
@@ -192,14 +245,14 @@
                         <td width="100" class="SUCCESS-text">
                                 <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=0">
                                     <!-- Added invalid href-attribute to img for imgpreviewer -->
-                                    <img src="28152b4e6c64412cd3721b9f44c8987e17955db65e64697e3871aecc1efd39f2.png"
-                                         href="28152b4e6c64412cd3721b9f44c8987e17955db65e64697e3871aecc1efd39f2.png"
+                                    <img src="8013fdbe52d9ccdc42a544800b885f08563711606fac73e6353c457386860e15.png"
+                                         href="8013fdbe52d9ccdc42a544800b885f08563711606fac73e6353c457386860e15.png"
                                          class="screenshot"
                                          width="48" height="48"/>
                                 </a>
                         </td>
                     <td width="100"><span class="top-level-step">SUCCESS</span></td>
-                    <td width="100"><span class="top-level-step">7.45s</span></td>
+                    <td width="100"><span class="top-level-step">31.34s</span></td>
                 </tr>
                     <tr>
                     <td colspan="5">
@@ -209,28 +262,213 @@
                     <td width="60" class="step-icon">
                         
                             <span style="margin-left: 40px; margin-right: 5px;"
-                                  class="nested-group-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
+                                  class="nested-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
                     </td>
                     <td>
                         <div class="step-description">
-                            <span class="nested-group-step">
-                                Adrian opens the Pagina de inicio
+                            <span class="nested-step">
+                                Given Adrian entro a la pagina de la Tienda Telmex
                             </span>
 
                         </div>
                     </td>
                         <td width="100" class="SUCCESS-text">
-                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=2">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=1">
                                     <!-- Added invalid href-attribute to img for imgpreviewer -->
-                                    <img src="28152b4e6c64412cd3721b9f44c8987e17955db65e64697e3871aecc1efd39f2.png"
-                                         href="28152b4e6c64412cd3721b9f44c8987e17955db65e64697e3871aecc1efd39f2.png"
+                                    <img src="73cc501cc2f1bffa804db28017b250fc8f22c96eff885b65a2816983a26cb71c.png"
+                                         href="73cc501cc2f1bffa804db28017b250fc8f22c96eff885b65a2816983a26cb71c.png"
+                                         class="screenshot"
+                                         width="48" height="48"/>
+                                </a>
+                        </td>
+                    <td width="100"><span class="nested-step">SUCCESS</span></td>
+                    <td width="100"><span class="nested-step">8.22s</span></td>
+                </tr>
+                <tr class="test-SUCCESS">
+                    <td width="60" class="step-icon">
+                        
+                            <span style="margin-left: 60px; margin-right: 5px;"
+                                  class="nested-group-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
+                    </td>
+                    <td>
+                        <div class="step-description">
+                            <span class="nested-group-step">
+                                Adrian opens the Pagina de inicio tienda telmex
+                            </span>
+
+                        </div>
+                    </td>
+                        <td width="100" class="SUCCESS-text">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=3">
+                                    <!-- Added invalid href-attribute to img for imgpreviewer -->
+                                    <img src="0c71bb8791b04f2fcf5c4842f1a6f846cc60e235c7bdb9c6a4ae57bf1479d74f.png"
+                                         href="0c71bb8791b04f2fcf5c4842f1a6f846cc60e235c7bdb9c6a4ae57bf1479d74f.png"
                                          class="screenshot"
                                          width="48" height="48"/>
                                 </a>
                         </td>
                     <td width="100"><span class="nested-group-step">SUCCESS</span></td>
-                    <td width="100"><span class="nested-group-step">6.09s</span></td>
+                    <td width="100"><span class="nested-group-step">7.04s</span></td>
                 </tr>
+
+                <tr class="test-SUCCESS">
+                    <td width="60" class="step-icon">
+                        
+                            <span style="margin-left: 40px; margin-right: 5px;"
+                                  class="nested-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
+                    </td>
+                    <td>
+                        <div class="step-description">
+                            <span class="nested-step">
+                                When el busca los siguientes articulos y agrega una al carrito de compras<br><table class='embedded'><thead><th>articulo</th><th>expected</th></thead><tbody><tr><td>lavadora</td><td>encontrado</td></tr></tbody></table>
+                            </span>
+
+                        </div>
+                    </td>
+                        <td width="100" class="SUCCESS-text">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=5">
+                                    <!-- Added invalid href-attribute to img for imgpreviewer -->
+                                    <img src="3675a8072de3a8fa474d384faefddce504f1c18a2b51d2098a9be1d5b483b638.png"
+                                         href="3675a8072de3a8fa474d384faefddce504f1c18a2b51d2098a9be1d5b483b638.png"
+                                         class="screenshot"
+                                         width="48" height="48"/>
+                                </a>
+                        </td>
+                    <td width="100"><span class="nested-step">SUCCESS</span></td>
+                    <td width="100"><span class="nested-step">10.61s</span></td>
+                </tr>
+                <tr class="test-SUCCESS">
+                    <td width="60" class="step-icon">
+                        
+                            <span style="margin-left: 60px; margin-right: 5px;"
+                                  class="nested-group-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
+                    </td>
+                    <td>
+                        <div class="step-description">
+                            <span class="nested-group-step">
+                                Adrian enters 'lavadora' into Campo de busqueda de Tienda Telmex
+                            </span>
+
+                        </div>
+                    </td>
+                        <td width="100" class="SUCCESS-text">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=7">
+                                    <!-- Added invalid href-attribute to img for imgpreviewer -->
+                                    <img src="728ca71b7ec28b6e7d7af60115a618386c6db64d1bf726ad1fa7f2a49e4ad03b.png"
+                                         href="728ca71b7ec28b6e7d7af60115a618386c6db64d1bf726ad1fa7f2a49e4ad03b.png"
+                                         class="screenshot"
+                                         width="48" height="48"/>
+                                </a>
+                        </td>
+                    <td width="100"><span class="nested-group-step">SUCCESS</span></td>
+                    <td width="100"><span class="nested-group-step">2.61s</span></td>
+                </tr>
+                <tr class="test-SUCCESS">
+                    <td width="60" class="step-icon">
+                        
+                            <span style="margin-left: 60px; margin-right: 5px;"
+                                  class="nested-group-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
+                    </td>
+                    <td>
+                        <div class="step-description">
+                            <span class="nested-group-step">
+                                Adrian clicks on click en el boton comprar
+                            </span>
+
+                        </div>
+                    </td>
+                        <td width="100" class="SUCCESS-text">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=9">
+                                    <!-- Added invalid href-attribute to img for imgpreviewer -->
+                                    <img src="728ca71b7ec28b6e7d7af60115a618386c6db64d1bf726ad1fa7f2a49e4ad03b.png"
+                                         href="728ca71b7ec28b6e7d7af60115a618386c6db64d1bf726ad1fa7f2a49e4ad03b.png"
+                                         class="screenshot"
+                                         width="48" height="48"/>
+                                </a>
+                        </td>
+                    <td width="100"><span class="nested-group-step">SUCCESS</span></td>
+                    <td width="100"><span class="nested-group-step">0.76s</span></td>
+                </tr>
+                <tr class="test-SUCCESS">
+                    <td width="60" class="step-icon">
+                        
+                            <span style="margin-left: 60px; margin-right: 5px;"
+                                  class="nested-group-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
+                    </td>
+                    <td>
+                        <div class="step-description">
+                            <span class="nested-group-step">
+                                Adrian clicks on boton siguiente para comprar
+                            </span>
+
+                        </div>
+                    </td>
+                        <td width="100" class="SUCCESS-text">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=10">
+                                    <!-- Added invalid href-attribute to img for imgpreviewer -->
+                                    <img src="8013fdbe52d9ccdc42a544800b885f08563711606fac73e6353c457386860e15.png"
+                                         href="8013fdbe52d9ccdc42a544800b885f08563711606fac73e6353c457386860e15.png"
+                                         class="screenshot"
+                                         width="48" height="48"/>
+                                </a>
+                        </td>
+                    <td width="100"><span class="nested-group-step">SUCCESS</span></td>
+                    <td width="100"><span class="nested-group-step">6.39s</span></td>
+                </tr>
+
+                <tr class="test-SUCCESS">
+                    <td width="60" class="step-icon">
+                        
+                            <span style="margin-left: 40px; margin-right: 5px;"
+                                  class="nested-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
+                    </td>
+                    <td>
+                        <div class="step-description">
+                            <span class="nested-step">
+                                Then el valida que Tienda Telmex solicite iniciar sesion para comprar
+                            </span>
+
+                        </div>
+                    </td>
+                        <td width="100" class="SUCCESS-text">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=12">
+                                    <!-- Added invalid href-attribute to img for imgpreviewer -->
+                                    <img src="8013fdbe52d9ccdc42a544800b885f08563711606fac73e6353c457386860e15.png"
+                                         href="8013fdbe52d9ccdc42a544800b885f08563711606fac73e6353c457386860e15.png"
+                                         class="screenshot"
+                                         width="48" height="48"/>
+                                </a>
+                        </td>
+                    <td width="100"><span class="nested-step">SUCCESS</span></td>
+                    <td width="100"><span class="nested-step">1.59s</span></td>
+                </tr>
+                <tr class="test-SUCCESS">
+                    <td width="60" class="step-icon">
+                        
+                            <span style="margin-left: 60px; margin-right: 5px;"
+                                  class="nested-group-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
+                    </td>
+                    <td>
+                        <div class="step-description">
+                            <span class="nested-group-step">
+                                Then en mi telmex should be 'Inicia sesi&oacute;n en Mi Telmex'
+                            </span>
+
+                        </div>
+                    </td>
+                        <td width="100" class="SUCCESS-text">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=14">
+                                    <!-- Added invalid href-attribute to img for imgpreviewer -->
+                                    <img src="3675a8072de3a8fa474d384faefddce504f1c18a2b51d2098a9be1d5b483b638.png"
+                                         href="3675a8072de3a8fa474d384faefddce504f1c18a2b51d2098a9be1d5b483b638.png"
+                                         class="screenshot"
+                                         width="48" height="48"/>
+                                </a>
+                        </td>
+                    <td width="100"><span class="nested-group-step">SUCCESS</span></td>
+                    <td width="100"><span class="nested-group-step">0.78s</span></td>
+                </tr>
+
 
                     </table>
                     </td>
@@ -249,23 +487,23 @@
                             <a href="javaScript:void(0)" onClick="toggleDiv('stepSection1')"
                                style="display:block;">
                             <span class="top-level-step">
-                                When Adrian busca "Lavadora" y agrega una al carrito de compras
+                                Example #2: {articulo=iPhone, expected=encontrado}
                             </span>
                             </a>
 
                         </div>
                     </td>
                         <td width="100" class="SUCCESS-text">
-                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=4">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=16">
                                     <!-- Added invalid href-attribute to img for imgpreviewer -->
-                                    <img src="90f268865e5002dc0c835cb742d9344dd5a5d2fbfbfba60d462b8bd5e57a6d8a.png"
-                                         href="90f268865e5002dc0c835cb742d9344dd5a5d2fbfbfba60d462b8bd5e57a6d8a.png"
+                                    <img src="8013fdbe52d9ccdc42a544800b885f08563711606fac73e6353c457386860e15.png"
+                                         href="8013fdbe52d9ccdc42a544800b885f08563711606fac73e6353c457386860e15.png"
                                          class="screenshot"
                                          width="48" height="48"/>
                                 </a>
                         </td>
                     <td width="100"><span class="top-level-step">SUCCESS</span></td>
-                    <td width="100"><span class="top-level-step">19.54s</span></td>
+                    <td width="100"><span class="top-level-step">28s</span></td>
                 </tr>
                     <tr>
                     <td colspan="5">
@@ -275,84 +513,137 @@
                     <td width="60" class="step-icon">
                         
                             <span style="margin-left: 40px; margin-right: 5px;"
-                                  class="nested-group-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
+                                  class="nested-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
                     </td>
                     <td>
                         <div class="step-description">
-                            <span class="nested-group-step">
-                                Adrian enters 'Lavadora' into Campo de busqueda de Tienda Telmex
+                            <span class="nested-step">
+                                Given Adrian entro a la pagina de la Tienda Telmex
                             </span>
 
                         </div>
                     </td>
                         <td width="100" class="SUCCESS-text">
-                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=5">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=17">
                                     <!-- Added invalid href-attribute to img for imgpreviewer -->
-                                    <img src="596878f396fe51416e38b8c1184583128e12a2b305cc9581519648dc780e3423.png"
-                                         href="596878f396fe51416e38b8c1184583128e12a2b305cc9581519648dc780e3423.png"
+                                    <img src="7c742de417fdce85b275795971eae265a731c2ed673f9a1f5569d75974fad171.png"
+                                         href="7c742de417fdce85b275795971eae265a731c2ed673f9a1f5569d75974fad171.png"
                                          class="screenshot"
                                          width="48" height="48"/>
                                 </a>
                         </td>
-                    <td width="100"><span class="nested-group-step">SUCCESS</span></td>
-                    <td width="100"><span class="nested-group-step">5.1s</span></td>
+                    <td width="100"><span class="nested-step">SUCCESS</span></td>
+                    <td width="100"><span class="nested-step">5.93s</span></td>
                 </tr>
                 <tr class="test-SUCCESS">
                     <td width="60" class="step-icon">
                         
-                            <span style="margin-left: 40px; margin-right: 5px;"
+                            <span style="margin-left: 60px; margin-right: 5px;"
                                   class="nested-group-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
                     </td>
                     <td>
                         <div class="step-description">
                             <span class="nested-group-step">
-                                Adrian clicks on Seleccion primer resultado
+                                Adrian opens the Pagina de inicio tienda telmex
                             </span>
 
                         </div>
                     </td>
                         <td width="100" class="SUCCESS-text">
-                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=6">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=19">
                                     <!-- Added invalid href-attribute to img for imgpreviewer -->
-                                    <img src="ac7ba7d85423986e2e94247202bd4bf98037b9a673192208843a1ab638acacf0.png"
-                                         href="ac7ba7d85423986e2e94247202bd4bf98037b9a673192208843a1ab638acacf0.png"
+                                    <img src="d286b165dee0db474065ecb7bed9064a1d6a4fc8edf84a79c8f365fc04886c3b.png"
+                                         href="d286b165dee0db474065ecb7bed9064a1d6a4fc8edf84a79c8f365fc04886c3b.png"
                                          class="screenshot"
                                          width="48" height="48"/>
                                 </a>
                         </td>
                     <td width="100"><span class="nested-group-step">SUCCESS</span></td>
-                    <td width="100"><span class="nested-group-step">4.54s</span></td>
+                    <td width="100"><span class="nested-group-step">5.22s</span></td>
                 </tr>
+
                 <tr class="test-SUCCESS">
                     <td width="60" class="step-icon">
                         
                             <span style="margin-left: 40px; margin-right: 5px;"
+                                  class="nested-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
+                    </td>
+                    <td>
+                        <div class="step-description">
+                            <span class="nested-step">
+                                When el busca los siguientes articulos y agrega una al carrito de compras<br><table class='embedded'><thead><th>articulo</th><th>expected</th></thead><tbody><tr><td>iPhone</td><td>encontrado</td></tr></tbody></table>
+                            </span>
+
+                        </div>
+                    </td>
+                        <td width="100" class="SUCCESS-text">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=21">
+                                    <!-- Added invalid href-attribute to img for imgpreviewer -->
+                                    <img src="3675a8072de3a8fa474d384faefddce504f1c18a2b51d2098a9be1d5b483b638.png"
+                                         href="3675a8072de3a8fa474d384faefddce504f1c18a2b51d2098a9be1d5b483b638.png"
+                                         class="screenshot"
+                                         width="48" height="48"/>
+                                </a>
+                        </td>
+                    <td width="100"><span class="nested-step">SUCCESS</span></td>
+                    <td width="100"><span class="nested-step">11.15s</span></td>
+                </tr>
+                <tr class="test-SUCCESS">
+                    <td width="60" class="step-icon">
+                        
+                            <span style="margin-left: 60px; margin-right: 5px;"
                                   class="nested-group-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
                     </td>
                     <td>
                         <div class="step-description">
                             <span class="nested-group-step">
-                                Adrian clicks on Agregar al carrito de compras
+                                Adrian enters 'iPhone' into Campo de busqueda de Tienda Telmex
                             </span>
 
                         </div>
                     </td>
                         <td width="100" class="SUCCESS-text">
-                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=8">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=23">
                                     <!-- Added invalid href-attribute to img for imgpreviewer -->
-                                    <img src="f21d820c52b2e77956d003f630a7758308763b3844715e95937e55d834b77743.png"
-                                         href="f21d820c52b2e77956d003f630a7758308763b3844715e95937e55d834b77743.png"
+                                    <img src="07cf1184a749757810523a144eb1ca9cc21d608ebefeabcff1d3e50a61ef840e.png"
+                                         href="07cf1184a749757810523a144eb1ca9cc21d608ebefeabcff1d3e50a61ef840e.png"
                                          class="screenshot"
                                          width="48" height="48"/>
                                 </a>
                         </td>
                     <td width="100"><span class="nested-group-step">SUCCESS</span></td>
-                    <td width="100"><span class="nested-group-step">3.78s</span></td>
+                    <td width="100"><span class="nested-group-step">2.71s</span></td>
                 </tr>
                 <tr class="test-SUCCESS">
                     <td width="60" class="step-icon">
                         
-                            <span style="margin-left: 40px; margin-right: 5px;"
+                            <span style="margin-left: 60px; margin-right: 5px;"
+                                  class="nested-group-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
+                    </td>
+                    <td>
+                        <div class="step-description">
+                            <span class="nested-group-step">
+                                Adrian clicks on click en el boton comprar
+                            </span>
+
+                        </div>
+                    </td>
+                        <td width="100" class="SUCCESS-text">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=25">
+                                    <!-- Added invalid href-attribute to img for imgpreviewer -->
+                                    <img src="07cf1184a749757810523a144eb1ca9cc21d608ebefeabcff1d3e50a61ef840e.png"
+                                         href="07cf1184a749757810523a144eb1ca9cc21d608ebefeabcff1d3e50a61ef840e.png"
+                                         class="screenshot"
+                                         width="48" height="48"/>
+                                </a>
+                        </td>
+                    <td width="100"><span class="nested-group-step">SUCCESS</span></td>
+                    <td width="100"><span class="nested-group-step">2.78s</span></td>
+                </tr>
+                <tr class="test-SUCCESS">
+                    <td width="60" class="step-icon">
+                        
+                            <span style="margin-left: 60px; margin-right: 5px;"
                                   class="nested-group-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
                     </td>
                     <td>
@@ -364,17 +655,71 @@
                         </div>
                     </td>
                         <td width="100" class="SUCCESS-text">
-                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=10">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=26">
                                     <!-- Added invalid href-attribute to img for imgpreviewer -->
-                                    <img src="90f268865e5002dc0c835cb742d9344dd5a5d2fbfbfba60d462b8bd5e57a6d8a.png"
-                                         href="90f268865e5002dc0c835cb742d9344dd5a5d2fbfbfba60d462b8bd5e57a6d8a.png"
+                                    <img src="3675a8072de3a8fa474d384faefddce504f1c18a2b51d2098a9be1d5b483b638.png"
+                                         href="3675a8072de3a8fa474d384faefddce504f1c18a2b51d2098a9be1d5b483b638.png"
                                          class="screenshot"
                                          width="48" height="48"/>
                                 </a>
                         </td>
                     <td width="100"><span class="nested-group-step">SUCCESS</span></td>
-                    <td width="100"><span class="nested-group-step">4.91s</span></td>
+                    <td width="100"><span class="nested-group-step">4.94s</span></td>
                 </tr>
+
+                <tr class="test-SUCCESS">
+                    <td width="60" class="step-icon">
+                        
+                            <span style="margin-left: 40px; margin-right: 5px;"
+                                  class="nested-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
+                    </td>
+                    <td>
+                        <div class="step-description">
+                            <span class="nested-step">
+                                Then el valida que Tienda Telmex solicite iniciar sesion para comprar
+                            </span>
+
+                        </div>
+                    </td>
+                        <td width="100" class="SUCCESS-text">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=28">
+                                    <!-- Added invalid href-attribute to img for imgpreviewer -->
+                                    <img src="8013fdbe52d9ccdc42a544800b885f08563711606fac73e6353c457386860e15.png"
+                                         href="8013fdbe52d9ccdc42a544800b885f08563711606fac73e6353c457386860e15.png"
+                                         class="screenshot"
+                                         width="48" height="48"/>
+                                </a>
+                        </td>
+                    <td width="100"><span class="nested-step">SUCCESS</span></td>
+                    <td width="100"><span class="nested-step">1.32s</span></td>
+                </tr>
+                <tr class="test-SUCCESS">
+                    <td width="60" class="step-icon">
+                        
+                            <span style="margin-left: 60px; margin-right: 5px;"
+                                  class="nested-group-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
+                    </td>
+                    <td>
+                        <div class="step-description">
+                            <span class="nested-group-step">
+                                Then en mi telmex should be 'Inicia sesi&oacute;n en Mi Telmex'
+                            </span>
+
+                        </div>
+                    </td>
+                        <td width="100" class="SUCCESS-text">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=29">
+                                    <!-- Added invalid href-attribute to img for imgpreviewer -->
+                                    <img src="3675a8072de3a8fa474d384faefddce504f1c18a2b51d2098a9be1d5b483b638.png"
+                                         href="3675a8072de3a8fa474d384faefddce504f1c18a2b51d2098a9be1d5b483b638.png"
+                                         class="screenshot"
+                                         width="48" height="48"/>
+                                </a>
+                        </td>
+                    <td width="100"><span class="nested-group-step">SUCCESS</span></td>
+                    <td width="100"><span class="nested-group-step">0.67s</span></td>
+                </tr>
+
 
                     </table>
                     </td>
@@ -393,23 +738,23 @@
                             <a href="javaScript:void(0)" onClick="toggleDiv('stepSection2')"
                                style="display:block;">
                             <span class="top-level-step">
-                                Then Adrian valida que el titulo de la ventana contenga la palabra Lavadora
+                                Example #3: {articulo=Motocicleta, expected=encontrado}
                             </span>
                             </a>
 
                         </div>
                     </td>
                         <td width="100" class="SUCCESS-text">
-                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=12">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=30">
                                     <!-- Added invalid href-attribute to img for imgpreviewer -->
-                                    <img src="a1403d4b0e9b01b5466e013a38d655f8b8a2c87a606715fa418e998e4226ec35.png"
-                                         href="a1403d4b0e9b01b5466e013a38d655f8b8a2c87a606715fa418e998e4226ec35.png"
+                                    <img src="8013fdbe52d9ccdc42a544800b885f08563711606fac73e6353c457386860e15.png"
+                                         href="8013fdbe52d9ccdc42a544800b885f08563711606fac73e6353c457386860e15.png"
                                          class="screenshot"
                                          width="48" height="48"/>
                                 </a>
                         </td>
                     <td width="100"><span class="top-level-step">SUCCESS</span></td>
-                    <td width="100"><span class="top-level-step">1.62s</span></td>
+                    <td width="100"><span class="top-level-step">28.52s</span></td>
                 </tr>
                     <tr>
                     <td colspan="5">
@@ -419,6 +764,190 @@
                     <td width="60" class="step-icon">
                         
                             <span style="margin-left: 40px; margin-right: 5px;"
+                                  class="nested-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
+                    </td>
+                    <td>
+                        <div class="step-description">
+                            <span class="nested-step">
+                                Given Adrian entro a la pagina de la Tienda Telmex
+                            </span>
+
+                        </div>
+                    </td>
+                        <td width="100" class="SUCCESS-text">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=31">
+                                    <!-- Added invalid href-attribute to img for imgpreviewer -->
+                                    <img src="df8137556b610ce929e72d1217cbd5e09323f41b757a9a9f0e95ad2895a4b398.png"
+                                         href="df8137556b610ce929e72d1217cbd5e09323f41b757a9a9f0e95ad2895a4b398.png"
+                                         class="screenshot"
+                                         width="48" height="48"/>
+                                </a>
+                        </td>
+                    <td width="100"><span class="nested-step">SUCCESS</span></td>
+                    <td width="100"><span class="nested-step">6.06s</span></td>
+                </tr>
+                <tr class="test-SUCCESS">
+                    <td width="60" class="step-icon">
+                        
+                            <span style="margin-left: 60px; margin-right: 5px;"
+                                  class="nested-group-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
+                    </td>
+                    <td>
+                        <div class="step-description">
+                            <span class="nested-group-step">
+                                Adrian opens the Pagina de inicio tienda telmex
+                            </span>
+
+                        </div>
+                    </td>
+                        <td width="100" class="SUCCESS-text">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=33">
+                                    <!-- Added invalid href-attribute to img for imgpreviewer -->
+                                    <img src="0ab03c49f82e925a959c4b10f24b1b823a98c90a080d4f8fa6b0b4dd0b52fbc4.png"
+                                         href="0ab03c49f82e925a959c4b10f24b1b823a98c90a080d4f8fa6b0b4dd0b52fbc4.png"
+                                         class="screenshot"
+                                         width="48" height="48"/>
+                                </a>
+                        </td>
+                    <td width="100"><span class="nested-group-step">SUCCESS</span></td>
+                    <td width="100"><span class="nested-group-step">5.39s</span></td>
+                </tr>
+
+                <tr class="test-SUCCESS">
+                    <td width="60" class="step-icon">
+                        
+                            <span style="margin-left: 40px; margin-right: 5px;"
+                                  class="nested-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
+                    </td>
+                    <td>
+                        <div class="step-description">
+                            <span class="nested-step">
+                                When el busca los siguientes articulos y agrega una al carrito de compras<br><table class='embedded'><thead><th>articulo</th><th>expected</th></thead><tbody><tr><td>Motocicleta</td><td>encontrado</td></tr></tbody></table>
+                            </span>
+
+                        </div>
+                    </td>
+                        <td width="100" class="SUCCESS-text">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=35">
+                                    <!-- Added invalid href-attribute to img for imgpreviewer -->
+                                    <img src="3675a8072de3a8fa474d384faefddce504f1c18a2b51d2098a9be1d5b483b638.png"
+                                         href="3675a8072de3a8fa474d384faefddce504f1c18a2b51d2098a9be1d5b483b638.png"
+                                         class="screenshot"
+                                         width="48" height="48"/>
+                                </a>
+                        </td>
+                    <td width="100"><span class="nested-step">SUCCESS</span></td>
+                    <td width="100"><span class="nested-step">11.56s</span></td>
+                </tr>
+                <tr class="test-SUCCESS">
+                    <td width="60" class="step-icon">
+                        
+                            <span style="margin-left: 60px; margin-right: 5px;"
+                                  class="nested-group-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
+                    </td>
+                    <td>
+                        <div class="step-description">
+                            <span class="nested-group-step">
+                                Adrian enters 'Motocicleta' into Campo de busqueda de Tienda Telmex
+                            </span>
+
+                        </div>
+                    </td>
+                        <td width="100" class="SUCCESS-text">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=37">
+                                    <!-- Added invalid href-attribute to img for imgpreviewer -->
+                                    <img src="df3945f0e5ad1fb7f4378100dafa6812d59f9d59b089021729cada714dcfdeb0.png"
+                                         href="df3945f0e5ad1fb7f4378100dafa6812d59f9d59b089021729cada714dcfdeb0.png"
+                                         class="screenshot"
+                                         width="48" height="48"/>
+                                </a>
+                        </td>
+                    <td width="100"><span class="nested-group-step">SUCCESS</span></td>
+                    <td width="100"><span class="nested-group-step">2.97s</span></td>
+                </tr>
+                <tr class="test-SUCCESS">
+                    <td width="60" class="step-icon">
+                        
+                            <span style="margin-left: 60px; margin-right: 5px;"
+                                  class="nested-group-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
+                    </td>
+                    <td>
+                        <div class="step-description">
+                            <span class="nested-group-step">
+                                Adrian clicks on click en el boton comprar
+                            </span>
+
+                        </div>
+                    </td>
+                        <td width="100" class="SUCCESS-text">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=39">
+                                    <!-- Added invalid href-attribute to img for imgpreviewer -->
+                                    <img src="df3945f0e5ad1fb7f4378100dafa6812d59f9d59b089021729cada714dcfdeb0.png"
+                                         href="df3945f0e5ad1fb7f4378100dafa6812d59f9d59b089021729cada714dcfdeb0.png"
+                                         class="screenshot"
+                                         width="48" height="48"/>
+                                </a>
+                        </td>
+                    <td width="100"><span class="nested-group-step">SUCCESS</span></td>
+                    <td width="100"><span class="nested-group-step">2.99s</span></td>
+                </tr>
+                <tr class="test-SUCCESS">
+                    <td width="60" class="step-icon">
+                        
+                            <span style="margin-left: 60px; margin-right: 5px;"
+                                  class="nested-group-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
+                    </td>
+                    <td>
+                        <div class="step-description">
+                            <span class="nested-group-step">
+                                Adrian clicks on boton siguiente para comprar
+                            </span>
+
+                        </div>
+                    </td>
+                        <td width="100" class="SUCCESS-text">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=40">
+                                    <!-- Added invalid href-attribute to img for imgpreviewer -->
+                                    <img src="8013fdbe52d9ccdc42a544800b885f08563711606fac73e6353c457386860e15.png"
+                                         href="8013fdbe52d9ccdc42a544800b885f08563711606fac73e6353c457386860e15.png"
+                                         class="screenshot"
+                                         width="48" height="48"/>
+                                </a>
+                        </td>
+                    <td width="100"><span class="nested-group-step">SUCCESS</span></td>
+                    <td width="100"><span class="nested-group-step">4.84s</span></td>
+                </tr>
+
+                <tr class="test-SUCCESS">
+                    <td width="60" class="step-icon">
+                        
+                            <span style="margin-left: 40px; margin-right: 5px;"
+                                  class="nested-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
+                    </td>
+                    <td>
+                        <div class="step-description">
+                            <span class="nested-step">
+                                Then el valida que Tienda Telmex solicite iniciar sesion para comprar
+                            </span>
+
+                        </div>
+                    </td>
+                        <td width="100" class="SUCCESS-text">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=42">
+                                    <!-- Added invalid href-attribute to img for imgpreviewer -->
+                                    <img src="3675a8072de3a8fa474d384faefddce504f1c18a2b51d2098a9be1d5b483b638.png"
+                                         href="3675a8072de3a8fa474d384faefddce504f1c18a2b51d2098a9be1d5b483b638.png"
+                                         class="screenshot"
+                                         width="48" height="48"/>
+                                </a>
+                        </td>
+                    <td width="100"><span class="nested-step">SUCCESS</span></td>
+                    <td width="100"><span class="nested-step">1.32s</span></td>
+                </tr>
+                <tr class="test-SUCCESS">
+                    <td width="60" class="step-icon">
+                        
+                            <span style="margin-left: 60px; margin-right: 5px;"
                                   class="nested-group-icon"><i class='fa fa-check-circle-o success-icon ' title='SUCCESS'></i></span>
                     </td>
                     <td>
@@ -430,17 +959,18 @@
                         </div>
                     </td>
                         <td width="100" class="SUCCESS-text">
-                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=13">
+                                <a href="849c593dbb4fb479580cc2fbc585c8af7ce5caf55f37bbc05322804512ac999d_screenshots.html#screenshots?screenshot=43">
                                     <!-- Added invalid href-attribute to img for imgpreviewer -->
-                                    <img src="a1403d4b0e9b01b5466e013a38d655f8b8a2c87a606715fa418e998e4226ec35.png"
-                                         href="a1403d4b0e9b01b5466e013a38d655f8b8a2c87a606715fa418e998e4226ec35.png"
+                                    <img src="3675a8072de3a8fa474d384faefddce504f1c18a2b51d2098a9be1d5b483b638.png"
+                                         href="3675a8072de3a8fa474d384faefddce504f1c18a2b51d2098a9be1d5b483b638.png"
                                          class="screenshot"
                                          width="48" height="48"/>
                                 </a>
                         </td>
                     <td width="100"><span class="nested-group-step">SUCCESS</span></td>
-                    <td width="100"><span class="nested-group-step">0.82s</span></td>
+                    <td width="100"><span class="nested-group-step">0.68s</span></td>
                 </tr>
+
 
                     </table>
                     </td>
@@ -448,7 +978,7 @@
                 <tr class="test-SUCCESS">
                     <td colspan="3"></td>
                     <td width="100"><span class="top-level-step"><em>SUCCESS</em></span></td>
-                    <td width="100"><span class="top-level-step"><em>39.78s</em></span></td>
+                    <td width="100"><span class="top-level-step"><em>89.87s</em></span></td>
                 </tr>
 
             </table>

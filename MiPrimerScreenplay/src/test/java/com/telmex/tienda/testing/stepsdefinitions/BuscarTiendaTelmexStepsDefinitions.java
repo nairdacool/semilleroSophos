@@ -9,7 +9,7 @@ import com.telmex.tienda.testing.tasks.Buscar;
 import com.telmex.tienda.testing.tasks.CarritoDeCompra;
 import com.telmex.tienda.testing.tasks.EntrarATiendaTelmex;
 import com.telmex.tienda.testing.tasks.SeleccionarResultado;
-import com.telmex.tienda.testing.ui.PaginaDeInicio;
+import com.telmex.tienda.testing.ui.PaginaDeInicioTiendaTelmex;
 import cucumber.api.java.Before;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
@@ -20,7 +20,7 @@ import net.thucydides.core.annotations.Managed;
 
 public class BuscarTiendaTelmexStepsDefinitions {
 	Actor adrian = Actor.named("Adrian");
-	PaginaDeInicio paginaDeInicio;
+	PaginaDeInicioTiendaTelmex paginaDeInicio;
 
 	@Managed(driver = "chrome")
 	WebDriver suNavegador;
@@ -33,10 +33,10 @@ public class BuscarTiendaTelmexStepsDefinitions {
 	
 	@Given("Adrian entro a Tienda Telmex")
 	public void adrianEntroATiendaTelmex() {
-		adrian.attemptsTo(EntrarATiendaTelmex.En(paginaDeInicio));
+		adrian.wasAbleTo(EntrarATiendaTelmex.En(paginaDeInicio));
 	}
 
-	@When("^Adrian busca \"([^\"]*)\" y agrega una al carrito de compras$")
+	@When("^el busca \"([^\"]*)\" y agrega una al carrito de compras$")
 	public void adrianBuscaYAgregaUnaAlCarritoDeCompras(String palabra) {
 		adrian.attemptsTo(Buscar.laPalabra(palabra));
 		adrian.attemptsTo(SeleccionarResultado.primero());
@@ -44,8 +44,8 @@ public class BuscarTiendaTelmexStepsDefinitions {
 		adrian.attemptsTo(BotonSiguiente.comprar());
 	}
 
-	@Then("Adrian valida que el titulo de la ventana contenga la palabra (.*)")
-	public void adrianValidaQueElTituloDeLaVentanaContengaLaPalabra(String palabra) {
+	@Then("el valida que Tienda Telmex solicite iniciar sesion para comprar (.*)")
+	public void adrianValidaQueTiendaTelmexSoliciteIniciarSesionParaComprar(String palabra) {
 		adrian.should(seeThat(EnMiTelmex.iniciarSesion(), equalTo("Inicia sesión en Mi Telmex")));
 	}
 

@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?><testsuite errors="0" failures="1" name="Busqueda en Google" skipped="0" tests="1" time="23.32" timestamp="2019-08-04 09:55:05"><testcase name="Busqueda en Google exitosa"><failure message="&#10;Expected: &quot;Lavadora&quot;&#10;     but: was null" type="java.lang.AssertionError">
-Expected: "Lavadora"
-     but: was null</failure><system-err>
-Expected: "Lavadora"
-     but: was null&#13;
-com.google.testing.stepsdefinitions.BuscarEnGoogleStepsDefinitions.adrianValidaQueElTituloDeLaVentanaContengaLaPalabra(BuscarEnGoogleStepsDefinitions.java:45)&#13;
-✽.Adrian valida que el titulo de la ventana contenga la palabra Lavadora(src/test/java/com/google/testing/features/BuscarEnGoogle.feature:15)&#13;
-</system-err></testcase></testsuite>

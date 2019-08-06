@@ -13,5 +13,12 @@ public class PaginaDeContenido extends PageObject {
 	public static Target getAgregarAlCarritoDeCompra() {
 		return agregarAlCarritoDeCompra;
 	}
+	
+	private static final Target botonComprar = 
+			Target.the("click en el boton comprar").located(By.xpath("//form[@id='AddToCartForm1']//input[@id='button']"));
+	
+	public static final Target getBotonComprar() {
+		return botonComprar;
+	}
 
 }
