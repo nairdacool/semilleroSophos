@@ -35,7 +35,6 @@ public class UtilidadesExcel {
 	final static String variableEntorno = "webdriver.chrome.driver";
 	final static By campoDeBusqueda = By.name("query");
 	final static By botonDeBusqueda = By.xpath("//input[@id='botonbuscar1']");
-		
 	public static WebDriver adrian;
 	public static FileInputStream inputStream;
 	public static Workbook workbook;

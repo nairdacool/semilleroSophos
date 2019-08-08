@@ -5,6 +5,9 @@ Feature: Busqueda de Articulo en Tienda Telmex
  voy a ingresar a la pagina www.tienda.telmex.com
  y por lo tanto buscar un Articulo
 
+Background: 
+		Given Adrian abrio el navegador web
+		
   Scenario Outline: Busqueda articulo en Tienda Telmex
     Given Adrian entro a la pagina de la Tienda Telmex
     When el busca los siguientes articulos y agrega una al carrito de compras
@@ -13,7 +16,7 @@ Feature: Busqueda de Articulo en Tienda Telmex
     Then el valida que Tienda Telmex solicite iniciar sesion para comprar
 
     Examples: 
-	      | articulo      | expected |
-	      | lavadora      |encontrado|
-	      | iPhone        |encontrado|
-	      | Motocicleta 	|encontrado|
+	      | articulo      | expected      |
+	      | lavadora      | encontrado    |
+	      | estufa				|	encontrado		|
+	      | avion					|	no encontrado |

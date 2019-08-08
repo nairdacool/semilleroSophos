@@ -6,7 +6,7 @@ import net.serenitybdd.screenplay.Actor;
 import net.serenitybdd.screenplay.Question;
 import net.serenitybdd.screenplay.questions.Text;
 
-public class EnMiTelmex implements Question<String>{
+public class EnMiTelmex implements Question<String> {
 
 	@Override
 	public String answeredBy(Actor actor) {

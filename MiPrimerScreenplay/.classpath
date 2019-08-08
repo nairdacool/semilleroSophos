@@ -26,5 +26,11 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-12/"/>
 	<classpathentry kind="con" path="org.eclipse.buildship.core.gradleclasspathcontainer"/>
+	<classpathentry kind="lib" path="C:/Users/semillero/.gradle/caches/modules-2/files-2.1/io.cucumber/gherkin/5.0.0/a05c7dd957349d6ce3908771aa5414cb15777eb7/gherkin-5.0.0.jar" sourcepath="C:/Users/semillero/.gradle/caches/modules-2/files-2.1/io.cucumber/gherkin/5.0.0/207c94db5ac555811ae10c2e70c7da93df6f276/gherkin-5.0.0-sources.jar">
+		<attributes>
+			<attribute name="gradle_used_by_scope" value="main,test"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="C:/Selenium/poi-4.1.0/poi-4.1.0.jar"/>
 	<classpathentry kind="output" path="bin/default"/>
 </classpath>

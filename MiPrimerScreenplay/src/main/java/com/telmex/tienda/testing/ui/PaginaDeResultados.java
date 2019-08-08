@@ -14,5 +14,13 @@ public class PaginaDeResultados extends PageObject {
 	public static Target getPrimerResultadoDeLaPagina() {
 		return primerResultadoDeLaPagina;
 	}
+	
+	private static final Target resultadNoEncontrado = 
+			Target.the("articulo no encontrado").located(By
+					.xpath("//span[@class='txt_precioficha']"));
+	
+	public static Target getResultadNoEncontrado() {
+		return resultadNoEncontrado;
+	}
 
 }

@@ -1,1 +1,14 @@
-<?xml version="1.0" encoding="UTF-8"?><testsuite errors="0" failures="0" name="Busqueda de Articulo en Tienda Telmex" skipped="0" tests="3" time="89.87" timestamp="2019-08-06 01:03:55"><testcase name="Busqueda articulo en Tienda Telmex"/></testsuite>
+<?xml version="1.0" encoding="UTF-8"?><testsuite errors="3" failures="0" name="Busqueda de Articulo en Tienda Telmex" skipped="0" tests="3" time="39.42" timestamp="2019-08-07 04:31:15"><testcase name="Busqueda articulo en Tienda Telmex"><error message="The actor Adrian does not have the ability to browse the web" type="net.serenitybdd.screenplay.exceptions.ActorCannotBrowseTheWebException">The actor Adrian does not have the ability to browse the web</error><system-err>The actor Adrian does not have the ability to browse the web&#13;
+com.telmex.tienda.testing.tasks.EntrarATiendaTelmex.performAs(EntrarATiendaTelmex.java:20)&#13;
+com.telmex.tienda.testing.stepsdefinitions.BuscarArticulosTiendaTelmexStepsDefinitions.adrianEntroALaPaginaDeLaTiendaTelmex(BuscarArticulosTiendaTelmexStepsDefinitions.java:40)&#13;
+java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke0(Native Method)&#13;
+java.base/jdk.internal.reflect.NativeMethodAccessorImpl.invoke(NativeMethodAccessorImpl.java:62)&#13;
+java.base/jdk.internal.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)&#13;
+cucumber.runner.Runner.runPickle(Runner.java:80)&#13;
+org.eclipse.jdt.internal.junit4.runner.JUnit4TestReference.run(JUnit4TestReference.java:89)&#13;
+org.eclipse.jdt.internal.junit.runner.TestExecution.run(TestExecution.java:41)&#13;
+org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:541)&#13;
+org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.runTests(RemoteTestRunner.java:763)&#13;
+org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.run(RemoteTestRunner.java:463)&#13;
+org.eclipse.jdt.internal.junit.runner.RemoteTestRunner.main(RemoteTestRunner.java:209)&#13;
+</system-err></testcase></testsuite>
